@@ -1,0 +1,33 @@
+extend type Query {
+
+    authorById(id: ID!): Author
+
+    authors: [Author!]!
+}
+
+extend type Mutation {
+
+    createAuthor(editAuthorReq: EditAuthorReq!): Author!
+
+    editAuthor(id: ID!, editAuthorReq: EditAuthorReq!): Author
+
+    deleteAuthor(id: ID!): Author
+}
+
+type Author {
+    id: ID!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    fullName: String!
+    about: String
+    nationality: String
+    genre: String
+    books: [Book!]!
+}
+
+input EditAuthorReq {
+    fullName: String!
+    about: String
+    nationality: String
+    genre: String
+}

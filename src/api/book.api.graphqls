@@ -1,0 +1,46 @@
+extend type Query {
+
+    bookById(id: ID!): Book
+
+    booksByAuthor(authorId: Int): [Book!]!
+
+    books: [Book!]!
+}
+
+extend type Mutation {
+
+    createBook(editBookReq: EditBookReq!): Book!
+
+    editBook(id: ID!, editBookReq: EditBookReq!): Book
+
+    deleteBook(id: ID!): Book
+}
+
+type Book {
+    id: ID!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    author: Author!
+    fullName: String!
+    about: String
+    language: String
+    genre: String
+    isbn13: String
+    isbn10: String
+    publisher: String
+    publishDate: Date
+    hardcover: Int
+}
+
+input EditBookReq {
+    authorId: Int
+    fullName: String!
+    about: String
+    language: String
+    genre: String
+    isbn13: String
+    isbn10: String
+    publisher: String
+    publishDate: Date
+    hardcover: Int
+}

@@ -1,0 +1,26 @@
+extend type Query {
+
+    userById(id: ID!): User
+
+    users: [User!]!
+}
+
+extend type Mutation {
+
+    editUser(id: ID!, editUserReq: EditUserReq!): User
+
+    deleteUser(id: ID!): User
+}
+
+type User {
+    id: ID!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    fullName: String!
+    email: String!
+}
+
+input EditUserReq {
+    fullName: String!
+    email: String!
+}

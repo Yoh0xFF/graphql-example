@@ -1,0 +1,11 @@
+scalar Date
+scalar Time
+scalar DateTime
+
+type Query {
+    ping: String!
+}
+
+type Mutation {
+    ping: String!
+}

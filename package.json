@@ -1,0 +1,42 @@
+{
+    "name": "graphql-example",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "watch": "export DEBUG=knex:query && knex migrate:latest && nodemon --exec babel-node src/app.js",
+        "build": "babel src --out-dir dist --copy-files",
+        "serve": "npm run build && knex migrate:latest && node dist/app.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "apollo-server-express": "^2.6.4",
+        "bcrypt": "^3.0.6",
+        "cookie-parser": "^1.4.4",
+        "cors": "^2.8.5",
+        "dataloader": "^1.4.0",
+        "express": "^4.17.1",
+        "graphql": "^14.3.1",
+        "graphql-iso-date": "^3.6.1",
+        "graphql-middleware": "^3.0.2",
+        "graphql-tools": "^4.0.5",
+        "http-errors": "^1.7.2",
+        "jsonwebtoken": "^8.5.1",
+        "knex": "^0.17.6",
+        "lodash": "^4.17.11",
+        "morgan": "^1.9.1",
+        "objection": "^1.6.9",
+        "sqlite3": "^4.0.9"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.4.4",
+        "@babel/core": "^7.4.5",
+        "@babel/node": "^7.4.5",
+        "@babel/plugin-proposal-class-properties": "^7.4.4",
+        "@babel/polyfill": "^7.4.4",
+        "@babel/preset-env": "^7.4.5",
+        "babel-plugin-dynamic-import-node-babel-7": "^2.0.7",
+        "nodemon": "^1.19.1"
+    }
+}
