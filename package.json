@@ -28,7 +28,9 @@
         "lodash": "^4.17.11",
         "morgan": "^1.9.1",
         "objection": "^1.6.9",
-        "sqlite3": "^4.0.9"
+        "password-validator": "^4.1.1",
+        "sqlite3": "^4.0.9",
+        "validator": "^11.0.0"
     },
     "devDependencies": {
         "@babel/cli": "^7.4.4",

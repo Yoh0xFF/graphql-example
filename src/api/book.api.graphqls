@@ -33,7 +33,7 @@ type Book {
 }
 
 input EditBookReq {
-    authorId: Int
+    authorId: Int!
     fullName: String!
     about: String
     language: String

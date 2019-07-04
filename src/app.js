@@ -29,9 +29,7 @@ initApi(`${ __dirname }/api`)
 
         // Create graphql schema with middleware
         const schema = makeExecutableSchema({ typeDefs, resolvers });
-        const schemaWithMiddleware = applyMiddleware(schema,
-            shield(permissions),
-            validators);
+        const schemaWithMiddleware = applyMiddleware(schema, validators, shield(permissions));
 
         // Configure apollo
         const apollo = new ApolloServer({
