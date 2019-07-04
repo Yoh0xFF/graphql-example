@@ -39,7 +39,7 @@ export async function initApi(directory) {
         source.Mutation = source.Mutation ? source.Mutation : {};
 
         const preQuery = target.Query;
-        const preMutation = source.Mutation;
+        const preMutation = target.Mutation;
 
         Object.assign(target, source);
         Object.assign(target.Query, preQuery);

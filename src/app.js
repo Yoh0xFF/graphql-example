@@ -7,6 +7,8 @@ import { applyMiddleware } from 'graphql-middleware';
 import { homedir } from 'os';
 import { initApi, initDatabase } from './utils/init';
 import { verify } from './utils/jwt';
+import { shield } from 'graphql-shield';
+import { isAuthorized } from './utils/shield';
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'; // Do not reject self signed certificates
 const port = process.env.PORT || 8080;
@@ -27,7 +29,9 @@ initApi(`${ __dirname }/api`)
 
         // Create graphql schema with middleware
         const schema = makeExecutableSchema({ typeDefs, resolvers });
-        const schemaWithMiddleware = applyMiddleware(schema, permissions, validators);
+        const schemaWithMiddleware = applyMiddleware(schema,
+            shield(permissions),
+            validators);
 
         // Configure apollo
         const apollo = new ApolloServer({
@@ -39,7 +43,7 @@ initApi(`${ __dirname }/api`)
                 // Verify authorization token
                 const parts = req.headers.authorization ? req.headers.authorization.split(' ') : [''];
                 const token = parts.length === 2 ? parts[1] : parts[0];
-                context.authUser = token && verify(token);
+                context.authUser = token ? verify(token) : {};
 
                 return context;
             },
