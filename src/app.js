@@ -2,13 +2,13 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import { makeExecutableSchema } from 'graphql-tools';
-import { ApolloServer } from 'apollo-server-express';
+import { ApolloServer, ForbiddenError } from 'apollo-server-express';
 import { applyMiddleware } from 'graphql-middleware';
 import { homedir } from 'os';
 import { initApi, initDatabase } from './utils/init';
 import { verify } from './utils/jwt';
 import { shield } from 'graphql-shield';
-import { isAuthorized } from './utils/shield';
+import { logger } from './utils/logging';
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'; // Do not reject self signed certificates
 const port = process.env.PORT || 8080;
@@ -29,7 +29,12 @@ initApi(`${ __dirname }/api`)
 
         // Create graphql schema with middleware
         const schema = makeExecutableSchema({ typeDefs, resolvers });
-        const schemaWithMiddleware = applyMiddleware(schema, validators, shield(permissions));
+        const schemaWithMiddleware = applyMiddleware(schema,
+            validators,
+            shield(permissions, {
+                allowExternalErrors: true,
+                fallbackError: new ForbiddenError('Not Authorised!')
+            }));
 
         // Configure apollo
         const apollo = new ApolloServer({
@@ -47,7 +52,7 @@ initApi(`${ __dirname }/api`)
             },
 
             formatError: (error) => {
-                console.error(error);
+                logger.error(error);
                 return error;
             },
 
@@ -58,9 +63,9 @@ initApi(`${ __dirname }/api`)
 
         // Run server
         app.listen({ port }, () => {
-            console.log(`🚀Server ready at http://localhost:${ port }${ apollo.graphqlPath }`);
+            logger.info(`🚀Server ready at http://localhost:${ port }${ apollo.graphqlPath }`);
         });
     })
     .catch(err => {
-        console.log(`Failed to load api - ${ err }`);
+        logger.error('Failed to load api', err);
     });

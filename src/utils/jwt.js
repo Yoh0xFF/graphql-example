@@ -1,4 +1,5 @@
 import * as jwt from 'jsonwebtoken';
+import { logger } from './logging';
 
 const secret = 'XgKTCSWmqNFwH35FbwPMbQQxcvDtHB';
 
@@ -16,6 +17,8 @@ export function verify(token) {
     try {
         return jwt.verify(token, secret, { issuer: 'example.io' });
     } catch (err) {
-        console.log(`JWT token check failed: ${ err }`);
+        if (err.name !== 'TokenExpiredError') {
+            logger.error('JWT token check failed', err);
+        }
     }
 }
