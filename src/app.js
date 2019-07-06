@@ -9,6 +9,7 @@ import { initApi, initDatabase } from './utils/init';
 import { verify } from './utils/jwt';
 import { shield } from 'graphql-shield';
 import { logger } from './utils/logging';
+import depthLimit from 'graphql-depth-limit';
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'; // Do not reject self signed certificates
 const port = process.env.PORT || 8080;
@@ -55,6 +56,10 @@ initApi(`${ __dirname }/api`)
                 logger.error(error);
                 return error;
             },
+
+            validationRules: [
+                depthLimit(5)
+            ],
 
             debug: true
         });
