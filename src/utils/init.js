@@ -3,6 +3,10 @@ import { homedir } from 'os';
 import fs from 'fs';
 import path from 'path';
 import Knex from 'knex';
+import { ForbiddenError } from 'apollo-server-express';
+import { makeExecutableSchema } from 'graphql-tools';
+import { applyMiddleware } from 'graphql-middleware';
+import { shield } from 'graphql-shield';
 
 export function initDatabase() {
     const dir = homedir();
@@ -78,5 +82,14 @@ export async function initApi(directory) {
 
     await _scan(directory);
 
-    return { typeDefs, resolvers, permissions, validators };
+    // Create graphql schema with middleware
+    const schema = makeExecutableSchema({ typeDefs, resolvers });
+    const schemaWithMiddleware = applyMiddleware(schema,
+        validators,
+        shield(permissions, {
+            allowExternalErrors: true,
+            fallbackError: new ForbiddenError('Not Authorised!')
+        }));
+
+    return schemaWithMiddleware;
 }

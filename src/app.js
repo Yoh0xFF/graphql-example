@@ -1,13 +1,10 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import { makeExecutableSchema } from 'graphql-tools';
-import { ApolloServer, ForbiddenError } from 'apollo-server-express';
-import { applyMiddleware } from 'graphql-middleware';
+import { ApolloServer } from 'apollo-server-express';
 import { homedir } from 'os';
 import { initApi, initDatabase } from './utils/init';
 import { verify } from './utils/jwt';
-import { shield } from 'graphql-shield';
 import { logger } from './utils/logging';
 import depthLimit from 'graphql-depth-limit';
 
@@ -20,7 +17,7 @@ initDatabase();
 
 // Init api and run server
 initApi(`${ __dirname }/api`)
-    .then(({ typeDefs, resolvers, permissions, validators }) => {
+    .then((schema) => {
         // Configure express
         const app = express();
         app.use(express.json());
@@ -28,18 +25,9 @@ initApi(`${ __dirname }/api`)
         app.use(cookieParser());
         app.use(cors());
 
-        // Create graphql schema with middleware
-        const schema = makeExecutableSchema({ typeDefs, resolvers });
-        const schemaWithMiddleware = applyMiddleware(schema,
-            validators,
-            shield(permissions, {
-                allowExternalErrors: true,
-                fallbackError: new ForbiddenError('Not Authorised!')
-            }));
-
         // Configure apollo
         const apollo = new ApolloServer({
-            schema: schemaWithMiddleware,
+            schema,
 
             context: ({ req }) => {
                 const context = {};
