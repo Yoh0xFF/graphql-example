@@ -8,7 +8,7 @@ exports.up = (knex, Promise) => {
             t.dateTime('created_at').notNullable();
             t.dateTime('updated_at').notNullable();
             t.integer('author_id').unsigned().notNullable();
-            t.string('full_name').notNullable();
+            t.string('title').notNullable();
             t.text('about');
             t.text('language');
             t.string('genre');

@@ -13,11 +13,12 @@ export default class User extends BaseModel {
             updatedAt: { type: 'string', format: 'date-time' },
             fullName: { type: 'string', minLength: 1, maxLength: 255 },
             email: { type: 'string', minLength: 1, maxLength: 255, format: 'email' },
-            password: { type: 'string', minLength: 1, maxLength: 255 }
+            password: { type: 'string', minLength: 1, maxLength: 255 },
+            role: { type: 'string', minLength: 1, maxLength: 255 }
         },
 
         required: [
-            'fullName', 'email'
+            'fullName', 'email', 'role'
         ]
     };
 }

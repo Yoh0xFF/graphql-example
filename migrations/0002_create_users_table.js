@@ -10,6 +10,7 @@ exports.up = (knex, Promise) => {
             t.string('full_name').notNullable();
             t.string('email').notNullable();
             t.string('password');
+            t.string('role').notNullable();
 
             t.unique('email', 'users_uq1');
         });

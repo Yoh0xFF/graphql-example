@@ -13,7 +13,7 @@ export default class Book extends BaseModel {
             createdAt: { type: 'string', format: 'date-time' },
             updatedAt: { type: 'string', format: 'date-time' },
             authorId: { type: 'integer' },
-            fullName: { type: 'string', minLength: 1, maxLength: 255 },
+            title: { type: 'string', minLength: 1, maxLength: 255 },
             about: { type: 'string', minLength: 1, maxLength: 4000 },
             language: { type: 'string', minLength: 1, maxLength: 255 },
             genre: { type: 'string', minLength: 1, maxLength: 255 },
@@ -25,7 +25,7 @@ export default class Book extends BaseModel {
         },
 
         required: [
-            'authorId', 'fullName'
+            'authorId', 'title'
         ]
     };
 

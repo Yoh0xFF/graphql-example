@@ -30,6 +30,8 @@ class UserService extends BaseService {
         editUserReq.password = await hash(editUserReq.password, HASH_ROUNDS);
         delete editUserReq.rePassword;
 
+        editUserReq.role = editUserReq.role || 'USER';
+
         const user = await User.query().insert(editUserReq);
 
         return user;
