@@ -6,7 +6,8 @@
     "scripts": {
         "watch": "export DEBUG=knex:query && knex migrate:latest && nodemon --exec babel-node src/app.js",
         "build": "babel src --out-dir dist --copy-files",
-        "serve": "npm run build && knex migrate:latest && node dist/app.js"
+        "serve": "npm run build && knex migrate:latest && node dist/app.js",
+        "test": "jest"
     },
     "author": "",
     "license": "ISC",
@@ -22,6 +23,7 @@
         "graphql-iso-date": "^3.6.1",
         "graphql-middleware": "^3.0.2",
         "graphql-shield": "^6.0.3",
+        "graphql-tag": "^2.10.1",
         "graphql-tools": "^4.0.5",
         "http-errors": "^1.7.3",
         "jsonwebtoken": "^8.5.1",

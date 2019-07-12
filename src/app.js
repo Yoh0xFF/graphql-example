@@ -3,7 +3,8 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import { ApolloServer } from 'apollo-server-express';
 import { homedir } from 'os';
-import { initApi, initDatabase } from './utils/init';
+import { initDatabase } from './utils/init.db';
+import { apiExplorer } from './utils/init.api';
 import { verify } from './utils/jwt';
 import { logger } from './utils/logging';
 import depthLimit from 'graphql-depth-limit';
@@ -16,7 +17,7 @@ const dir = homedir();
 initDatabase();
 
 // Init api and run server
-initApi(`${ __dirname }/api`)
+apiExplorer.getSchema(`${ __dirname }/api`)
     .then((schema) => {
         // Configure express
         const app = express();
