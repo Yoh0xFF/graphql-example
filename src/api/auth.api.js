@@ -1,6 +1,7 @@
 import { readFileSync } from 'fs';
 import { userService } from '../services/user.service';
 import { sign } from '../utils/jwt';
+import { undefinedFieldMessage } from 'graphql/validation/rules/FieldsOnCorrectType';
 
 export const typeDefs = readFileSync(`${ __dirname }/auth.api.graphqls`, 'utf8');
 
@@ -19,22 +20,22 @@ export const resolvers = {
             const user = await userService.login(email, password);
 
             if (!user) {
-                return { token: undefined, message: 'Invalid authentication credentials!' };
+                return { success: false, message: 'Invalid authentication credentials!', token: undefined };
             }
 
             const token = sign(user.$toJson());
 
-            return { token, message: 'Success!' };
+            return { success: true, message: 'Success!', token };
         },
 
         signup: async (obj, { signupReq }, context, info) => {
             if (await userService.findByEmail(signupReq.email)) {
-                return { user: undefined, message: 'Email address exists!' };
+                return { success: false, message: 'Email address exists!', user: undefined };
             }
 
             const user = await userService.createUser(signupReq);
 
-            return { user, message: 'Success!' };
+            return { success: true, message: 'Success!', user };
         },
 
         updatePersonalInfo: (obj, { fullName }, { authUser }, info) => {

@@ -59,9 +59,9 @@ class ApiExplorer {
         }
     }
 
-    async getSchema(directory) {
+    async getSchema() {
         if (this._read) {
-            await this._scan(directory);
+            await this._scan(__dirname);
             this._read = false;
         }
 

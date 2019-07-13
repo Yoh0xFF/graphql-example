@@ -5,7 +5,7 @@ extend type Query {
 
 extend type Mutation {
 
-    login(email: String, password: String): LoginStatus!
+    login(email: String!, password: String!): LoginStatus!
 
     signup(signupReq: SignupReq!): SingupStatus!
 
@@ -22,11 +22,13 @@ input SignupReq {
 }
 
 type LoginStatus {
-    token: String
+    success: Boolean!
     message: String!
+    token: String
 }
 
 type SingupStatus {
-    user: User
+    success: Boolean!
     message: String!
+    user: User
 }

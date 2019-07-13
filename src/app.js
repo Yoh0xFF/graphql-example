@@ -3,8 +3,8 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import { ApolloServer } from 'apollo-server-express';
 import { homedir } from 'os';
-import { initDatabase } from './utils/init.db';
-import { apiExplorer } from './utils/init.api';
+import { initDatabase } from './utils/database';
+import { apiExplorer } from './api';
 import { verify } from './utils/jwt';
 import { logger } from './utils/logging';
 import depthLimit from 'graphql-depth-limit';
@@ -17,7 +17,7 @@ const dir = homedir();
 initDatabase();
 
 // Init api and run server
-apiExplorer.getSchema(`${ __dirname }/api`)
+apiExplorer.getSchema()
     .then((schema) => {
         // Configure express
         const app = express();
@@ -27,7 +27,7 @@ apiExplorer.getSchema(`${ __dirname }/api`)
         app.use(cors());
 
         // Configure apollo
-        const apollo = new ApolloServer({
+        const apolloServer = new ApolloServer({
             schema,
 
             context: ({ req }) => {
@@ -53,11 +53,11 @@ apiExplorer.getSchema(`${ __dirname }/api`)
             debug: true
         });
 
-        apollo.applyMiddleware({ app });
+        apolloServer.applyMiddleware({ app });
 
         // Run server
         app.listen({ port }, () => {
-            logger.info(`🚀Server ready at http://localhost:${ port }${ apollo.graphqlPath }`);
+            logger.info(`🚀Server ready at http://localhost:${ port }${ apolloServer.graphqlPath }`);
         });
     })
     .catch(err => {

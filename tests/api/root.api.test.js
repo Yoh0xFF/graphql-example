@@ -1,41 +1,22 @@
-import { apiExplorer } from '../../src/utils/init.api'
-import { ApolloServer } from 'apollo-server-express';
-import { createTestClient } from 'apollo-server-testing';
 import gql from 'graphql-tag';
+import { initApolloClient } from '../utils/apollo-client';
+import { PING_MUTATION, PING_QUERY } from './root.api.test.gql';
 
-const PING = gql`
-    query {
-        ping
-    }
-`;
+describe('Test root api', () => {
 
-describe('Test', () => {
+    test('Test root query', async () => {
+        const { query } = await initApolloClient();
 
-    it('Test 1', async () => {
-        const schema = await apiExplorer.getSchema(`${ __dirname }/../../src/api`);
+        const { data } = await query({ query: PING_QUERY });
 
-        const apollo = new ApolloServer({
-            schema
-        });
-
-        const { query } = createTestClient(apollo);
-
-        const res = await query({ query: PING });
-        expect(res).toMatchSnapshot();
+        expect(data).toEqual({ 'ping': 'Hello!' });
     });
 
-    it('Test 2', async () => {
-        const schema = await apiExplorer.getSchema(`${ __dirname }/../../src/api`);
+    test('Test root mutation', async () => {
+        const { mutate } = await initApolloClient();
 
-        const apollo = new ApolloServer({
-            schema
-        });
+        const { data } = await mutate({ mutation: PING_MUTATION });
 
-        const { query } = createTestClient(apollo);
-
-        const res = await query({ query: PING });
-        expect(res).toMatchSnapshot();
+        expect(data).toEqual({ 'ping': 'Hello!' });
     });
 });
-
-
