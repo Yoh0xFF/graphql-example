@@ -30,13 +30,13 @@ apiExplorer.getSchema()
         const apolloServer = new ApolloServer({
             schema,
 
-            context: ({ req }) => {
+            context: ({ req, res }) => {
                 const context = {};
 
-                // Verify authorization token
+                // Verify jwt token
                 const parts = req.headers.authorization ? req.headers.authorization.split(' ') : [''];
-                const token = parts.length === 2 ? parts[1] : parts[0];
-                context.authUser = token ? verify(token) : {};
+                const token = parts.length === 2 && parts[0].toLowerCase() === 'bearer' ? parts[1] : undefined;
+                context.authUser = token ? verify(token) : undefined;
 
                 return context;
             },
