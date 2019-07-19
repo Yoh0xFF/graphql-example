@@ -3,9 +3,9 @@ scalar Time
 scalar DateTime
 
 type Query {
-    ping: String!
+    sayHello(name: String!): String!
 }
 
 type Mutation {
-    ping: String!
+    sayHello(name: String!): String!
 }

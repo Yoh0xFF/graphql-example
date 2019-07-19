@@ -6,12 +6,12 @@ export const permissions = {
     Query: {
 
         '*': isAuthorized,
-        ping: allow
+        sayHello: allow
     },
 
     Mutation: {
 
         '*': isAuthorized,
-        ping: allow
+        sayHello: allow
     }
 };

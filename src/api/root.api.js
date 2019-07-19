@@ -10,14 +10,16 @@ export const resolvers = {
     DateTime: GraphQLDateTime,
 
     Query: {
-        ping: () => {
-            return 'Hello!';
+
+        sayHello: (obj, args, context, info) => {
+            return `Hello ${ args.name }!`;
         }
     },
 
     Mutation: {
-        ping: () => {
-            return 'Hello!';
+
+        sayHello: (obj, args, context, info) => {
+            return `Hello ${ args.name }!`;
         }
     }
 };
