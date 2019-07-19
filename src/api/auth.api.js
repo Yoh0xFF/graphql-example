@@ -1,7 +1,6 @@
 import { readFileSync } from 'fs';
 import { userService } from '../services/user.service';
 import { sign } from '../utils/jwt';
-import { undefinedFieldMessage } from 'graphql/validation/rules/FieldsOnCorrectType';
 
 export const typeDefs = readFileSync(`${ __dirname }/auth.api.graphqls`, 'utf8');
 

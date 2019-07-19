@@ -14,17 +14,17 @@ export const validators = {
 
     Mutation: {
 
-        login: (resolve, parent, args, context) => {
+        login: (resolve, obj, args, context) => {
             const { email } = args;
 
             if (!isEmail(email)) {
                 throw new UserInputError('Invalid Email address!');
             }
 
-            return resolve(parent, args, context);
+            return resolve(obj, args, context);
         },
 
-        signup: (resolve, parent, args, context) => {
+        signup: (resolve, obj, args, context) => {
             const { email, password, rePassword } = args.signupReq;
 
             if (!isEmail(email)) {
@@ -39,10 +39,10 @@ export const validators = {
                 throw new UserInputError('Password is not strong enough!');
             }
 
-            return resolve(parent, args, context);
+            return resolve(obj, args, context);
         },
 
-        changePassword: (resolve, parent, args, context) => {
+        changePassword: (resolve, obj, args, context) => {
             const { newPassword, reNewPassword } = args;
 
             if (newPassword !== reNewPassword) {
@@ -53,7 +53,7 @@ export const validators = {
                 throw new UserInputError('Password is not strong enough!');
             }
 
-            return resolve(parent, args, context);
+            return resolve(obj, args, context);
         }
     }
 };

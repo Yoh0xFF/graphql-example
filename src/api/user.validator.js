@@ -5,14 +5,14 @@ export const validators = {
 
     Mutation: {
 
-        editUser: (resolve, parent, args, context) => {
+        editUser: (resolve, obj, args, context) => {
             const { email } = args.editUserReq;
 
             if (!isEmail(email)) {
                 throw new UserInputError('Invalid Email address!');
             }
 
-            return resolve(parent, args, context);
+            return resolve(obj, args, context);
         }
     }
 };
