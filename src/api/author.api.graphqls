@@ -16,6 +16,7 @@ extend type Mutation {
 
 type Author {
     id: ID!
+    creator: User!
     createdAt: DateTime!
     updatedAt: DateTime!
     fullName: String!

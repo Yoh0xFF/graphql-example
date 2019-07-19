@@ -7,7 +7,9 @@ class AuthorService extends BaseService {
         super(Author);
     }
 
-    async createAuthor(editAuthorReq) {
+    async createAuthor(creatorId, editAuthorReq) {
+        editAuthorReq.creatorId = creatorId;
+
         const author = await Author.query().insert(editAuthorReq);
 
         return author;

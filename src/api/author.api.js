@@ -1,6 +1,7 @@
 import { readFileSync } from 'fs';
 import { authorService } from '../services/author.service';
 import { BookByAuthorDataLoader } from '../dataloaders/book.dataloader';
+import { UserDataLoader } from '../dataloaders/user.dataloader';
 
 export const typeDefs = readFileSync(`${ __dirname }/author.api.graphqls`, 'utf8');
 
@@ -19,8 +20,8 @@ export const resolvers = {
 
     Mutation: {
 
-        createAuthor: (obj, { editAuthorReq }, context, info) => {
-            return authorService.createAuthor(editAuthorReq);
+        createAuthor: (obj, { editAuthorReq }, { authUser }, info) => {
+            return authorService.createAuthor(authUser.id, editAuthorReq);
         },
 
         editAuthor: (obj, { id, editAuthorReq }, context, info) => {
@@ -33,6 +34,12 @@ export const resolvers = {
     },
 
     Author: {
+
+        creator: ({ creatorId }, args, context, info) => {
+            const userDataLoader = UserDataLoader.getInstance(context);
+
+            return userDataLoader.load(creatorId);
+        },
 
         books: ({ id }, args, context, info) => {
             const bookByAuthorDataLoader = BookByAuthorDataLoader.getInstance(context);

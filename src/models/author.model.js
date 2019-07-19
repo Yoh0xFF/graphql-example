@@ -10,6 +10,7 @@ export default class Author extends BaseModel {
 
         properties: {
             id: { type: 'integer' },
+            creatorId: { type: 'integer' },
             createdAt: { type: 'string', format: 'date-time' },
             updatedAt: { type: 'string', format: 'date-time' },
             fullName: { type: 'string', minLength: 1, maxLength: 255 },
@@ -19,11 +20,20 @@ export default class Author extends BaseModel {
         },
 
         required: [
-            'fullName'
+            'creatorId', 'fullName'
         ]
     };
 
     static relationMappings = {
+        creator: {
+            relation: Model.BelongsToOneRelation,
+            modelClass: `${ __dirname }/user.model`,
+            join: {
+                from: 'authors.creatorId',
+                to: 'users.id'
+            }
+        },
+
         books: {
             relation: Model.ManyToManyRelation,
             modelClass: `${ __dirname }/book.model`,

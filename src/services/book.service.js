@@ -8,8 +8,10 @@ class BookService extends BaseService {
         super(Book);
     }
 
-    async createBook(editBookReq) {
+    async createBook(creatorId, editBookReq) {
         const { authorIds } = editBookReq;
+
+        editBookReq.creatorId = creatorId;
         delete editBookReq.authorIds;
 
         let trx;
