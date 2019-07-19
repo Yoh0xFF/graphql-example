@@ -14,7 +14,7 @@ export function initDatabase() {
 
         pool: {
             afterCreate: (conn, cb) => {
-                conn.run('PRAGMA foreign_keys = ON', cb);
+                conn.run('PRAGMA foreign_keys = ON;', cb);
             }
         },
 

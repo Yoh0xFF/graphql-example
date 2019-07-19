@@ -9,6 +9,12 @@ module.exports = {
             filename: `${ dir }/graphql.sqlite`
         },
 
+        pool: {
+            afterCreate: (conn, cb) => {
+                conn.run('PRAGMA foreign_keys = ON;', cb);
+            }
+        },
+
         useNullAsDefault: true
     }
 };
