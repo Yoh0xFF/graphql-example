@@ -1,13 +1,13 @@
 import gql from 'graphql-tag';
 
-export const PING_QUERY = gql`
+export const SAY_HELLO_QUERY = gql`
     query {
-        ping
+        sayHello(name: "User")
     }
 `;
 
-export const PING_MUTATION = gql`
+export const SAY_HELLO_MUTATION = gql`
     mutation {
-        ping
+        sayHello(name: "User")
     }
 `;
