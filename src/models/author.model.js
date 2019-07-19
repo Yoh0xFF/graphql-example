@@ -24,11 +24,17 @@ export default class Author extends BaseModel {
     };
 
     static relationMappings = {
-        relation: Model.HasManyRelation,
-        modelClass: `${ __dirname }/book.model`,
-        join: {
-            from: 'authors.id',
-            to: 'books.authorId'
+        books: {
+            relation: Model.ManyToManyRelation,
+            modelClass: `${ __dirname }/book.model`,
+            join: {
+                from: 'authors.id',
+                to: 'books.id',
+                through: {
+                    from: 'author_books.authorId',
+                    to: 'author_books.bookId'
+                }
+            }
         }
     };
 }

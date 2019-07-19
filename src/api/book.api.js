@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs';
 import { bookService } from '../services/book.service';
-import AuthorDataLoader from '../dataloaders/author.dataloader';
+import { AuthorByBookDataLoader } from '../dataloaders/author.dataloader';
 
 export const typeDefs = readFileSync(`${ __dirname }/book.api.graphqls`, 'utf8');
 
@@ -38,10 +38,10 @@ export const resolvers = {
 
     Book: {
 
-        author: ({ authorId }, args, context, info) => {
-            const authorDataLoader = AuthorDataLoader.getInstance(context);
+        authors: ({ id }, args, context, info) => {
+            const authorByBookDataLoader = AuthorByBookDataLoader.getInstance(context);
 
-            return authorDataLoader.load(authorId);
+            return authorByBookDataLoader.load(id);
         }
     }
 };

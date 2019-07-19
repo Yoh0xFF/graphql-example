@@ -1,5 +1,6 @@
 import BaseService from './base.service';
 import Book from '../models/book.model';
+import { transaction } from 'objection';
 
 class BookService extends BaseService {
 
@@ -8,15 +9,51 @@ class BookService extends BaseService {
     }
 
     async createBook(editBookReq) {
-        const book = await Book.query().insert(editBookReq);
+        const { authorIds } = editBookReq;
+        delete editBookReq.authorIds;
 
-        return book;
+        let trx;
+        try {
+            trx = await transaction.start(Book.knex());
+
+            const book = await Book.query(trx).insert(editBookReq);
+
+            for (const authorId of authorIds) {
+                await book.$relatedQuery('authors', trx).relate(authorId);
+            }
+
+            await trx.commit();
+
+            return book;
+        } catch (err) {
+            await trx.rollback();
+            throw err;
+        }
     }
 
     async editBook(id, editBookReq) {
-        await Book.query().findById(id).patch(editBookReq);
+        const { authorIds } = editBookReq;
+        delete editBookReq.authorIds;
 
-        return this.findById(id);
+        let trx;
+        try {
+            trx = await transaction.start(Book.knex());
+
+            await Book.query(trx).findById(id).patch(editBookReq);
+            const book = await Book.query(trx).findById(id);
+
+            await book.$relatedQuery('authors', trx).unrelate();
+            for (const authorId of authorIds) {
+                await book.$relatedQuery('authors', trx).relate(authorId);
+            }
+
+            await trx.commit();
+
+            return book;
+        } catch (err) {
+            await trx.rollback();
+            throw err;
+        }
     }
 
     async deleteBook(id) {

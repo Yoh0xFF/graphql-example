@@ -1,7 +1,7 @@
 import { rule } from 'graphql-shield';
 
 export const isAuthorized = rule()(
-    (obj, args, { authUser }, info) => authUser
+    (obj, args, { authUser }, info) => authUser && true
 );
 
 export const isUserManager = rule()(

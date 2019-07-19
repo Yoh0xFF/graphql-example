@@ -1,4 +1,5 @@
 import Book from '../models/book.model';
+import Author from '../models/author.model';
 import DataLoader from 'dataloader';
 
 export class BookDataLoader extends DataLoader {
@@ -24,14 +25,14 @@ export class BookByAuthorDataLoader extends DataLoader {
 
     constructor() {
         const batchLoader = async authorIds => {
-            return Book.query()
-                .whereIn('authorId', authorIds)
-                .then(books =>
-                    authorIds.map(authorId =>
-                        books.filter(book =>
-                            book.authorId === authorId
-                        )
-                    )
+            return Author.query()
+                .whereIn('id', authorIds)
+                .eager('books')
+                .then(authors =>
+                    authors.reduce((books, author) => {
+                        books.push(author.books);
+                        return books;
+                    }, [])
                 );
         };
 

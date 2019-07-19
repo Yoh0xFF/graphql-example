@@ -7,7 +7,6 @@ exports.up = (knex, Promise) => {
             t.increments('id').unsigned().notNullable().primary();
             t.dateTime('created_at').notNullable();
             t.dateTime('updated_at').notNullable();
-            t.integer('author_id').unsigned().notNullable();
             t.string('title').notNullable();
             t.text('about');
             t.text('language');
@@ -17,8 +16,6 @@ exports.up = (knex, Promise) => {
             t.string('publisher');
             t.date('publish_date');
             t.integer('hardcover');
-
-            t.foreign('author_id', 'books_fk1').references('authors.id');
         });
 };
 

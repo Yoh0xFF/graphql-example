@@ -20,8 +20,8 @@ type Book {
     id: ID!
     createdAt: DateTime!
     updatedAt: DateTime!
-    author: Author!
-    fullName: String!
+    authors: [Author!]!
+    title: String!
     about: String
     language: String
     genre: String
@@ -33,8 +33,8 @@ type Book {
 }
 
 input EditBookReq {
-    authorId: Int!
-    fullName: String!
+    authorIds: [ID!]!
+    title: String!
     about: String
     language: String
     genre: String
