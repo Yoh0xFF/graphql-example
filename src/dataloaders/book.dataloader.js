@@ -1,38 +1,16 @@
-import Book from '../models/book.model';
-import Author from '../models/author.model';
 import DataLoader from 'dataloader';
-
-export class BookDataLoader extends DataLoader {
-
-    constructor() {
-        const batchLoader = async bookIds => {
-            return Book.query().whereIn('id', bookIds);
-        };
-
-        super(batchLoader);
-    }
-
-    static getInstance(context) {
-        if (!context.bookDataLoader) {
-            context.bookDataLoader = new BookDataLoader();
-        }
-
-        return context.bookDataLoader;
-    }
-}
+import { authorService } from '../services/author.service';
 
 export class BookByAuthorDataLoader extends DataLoader {
 
     constructor() {
-        const batchLoader = async authorIds => {
-            return Author.query()
-                .whereIn('id', authorIds)
-                .eager('books')
-                .then(authors =>
-                    authors.reduce((books, author) => {
-                        books.push(author.books);
-                        return books;
-                    }, [])
+        const batchLoader = authorIds => {
+            return authorService
+                .findAuthorsWithRecentBooks(authorIds)
+                .then(
+                    authors => authorIds.map(
+                        authorId => authors.filter(author => author.id === authorId)[0].books
+                    )
                 );
         };
 

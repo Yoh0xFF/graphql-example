@@ -69,6 +69,12 @@ class BookService extends BaseService {
     async findByAuthor(authorId) {
         return Book.query().where('authorId', authorId);
     }
+
+    async findBooksWithAuthors(bookIds) {
+        return Book.query()
+            .whereIn('id', bookIds)
+            .eager('authors');
+    }
 }
 
 export const bookService = new BookService();

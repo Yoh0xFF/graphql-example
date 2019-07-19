@@ -1,11 +1,17 @@
 import DataLoader from 'dataloader';
-import User from '../models/user.model';
+import { userService } from '../services/user.service';
 
 export class UserDataLoader extends DataLoader {
 
     constructor() {
         const batchLoader = async userIds => {
-            return User.query().whereIn('id', userIds);
+            return userService
+                .findByIds(userIds)
+                .then(
+                    users => userIds.map(
+                        userId => users.filter(user => user.id === userId)[0]
+                    )
+                );
         };
 
         super(batchLoader);

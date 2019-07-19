@@ -28,6 +28,15 @@ class AuthorService extends BaseService {
 
         return author;
     }
+
+    async findAuthorsWithRecentBooks(authorIds) {
+        return Author.query()
+            .whereIn('id', authorIds)
+            .eager('books')
+            .modifyEager('books', builder => {
+                builder.orderBy('createdAt', 'desc').limit(10);
+            });
+    }
 }
 
 export const authorService = new AuthorService();
