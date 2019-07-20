@@ -105,7 +105,7 @@ describe('Test auth api', () => {
             mutation: SIGNUP_MUTATION,
             variables: {
                 fullName: 'Test User',
-                email: `email_${ Date.now() }@mail.com`,
+                email: `email_${Date.now()}@mail.com`,
                 password: '123',
                 rePassword: '123'
             }
@@ -122,7 +122,7 @@ describe('Test auth api', () => {
             mutation: SIGNUP_MUTATION,
             variables: {
                 fullName: 'Test User',
-                email: `email_${ Date.now() }@mail.com`,
+                email: `email_${Date.now()}@mail.com`,
                 password: 'Test12345_',
                 rePassword: 'test12345_'
             }
@@ -139,7 +139,7 @@ describe('Test auth api', () => {
             mutation: SIGNUP_MUTATION,
             variables: {
                 fullName: 'Test User',
-                email: `user_${ Date.now() }@mail.com`,
+                email: `user_${Date.now()}@mail.com`,
                 password: 'Test12345_',
                 rePassword: 'Test12345_'
             }
@@ -152,7 +152,7 @@ describe('Test auth api', () => {
     test('Test updatePersonalInfo mutation success', async () => {
         const user = await userService.createUser({
             fullName: 'Test user',
-            email: `user_${ Date.now() }@mail.com`,
+            email: `user_${Date.now()}@mail.com`,
             password: 'Test12345_'
         });
 
@@ -170,7 +170,7 @@ describe('Test auth api', () => {
     test('Test changePassword mutation fail, invalid current password', async () => {
         const user = await userService.createUser({
             fullName: 'Test user',
-            email: `user_${ Date.now() }@mail.com`,
+            email: `user_${Date.now()}@mail.com`,
             password: 'Test12345_'
         });
 
@@ -189,7 +189,7 @@ describe('Test auth api', () => {
     test('Test changePassword mutation fail, password doesn\'t match', async () => {
         const user = await userService.createUser({
             fullName: 'Test user',
-            email: `user_${ Date.now() }@mail.com`,
+            email: `user_${Date.now()}@mail.com`,
             password: 'Test12345_'
         });
 
@@ -210,7 +210,7 @@ describe('Test auth api', () => {
     test('Test changePassword mutation fail, short password', async () => {
         const user = await userService.createUser({
             fullName: 'Test user',
-            email: `user_${ Date.now() }@mail.com`,
+            email: `user_${Date.now()}@mail.com`,
             password: 'Test12345_'
         });
 
@@ -231,7 +231,7 @@ describe('Test auth api', () => {
     test('Test changePassword mutation success', async () => {
         const user = await userService.createUser({
             fullName: 'Test user',
-            email: `user_${ Date.now() }@mail.com`,
+            email: `user_${Date.now()}@mail.com`,
             password: 'Test12345_'
         });
 

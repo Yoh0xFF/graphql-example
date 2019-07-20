@@ -2,13 +2,13 @@ import { initDatabase } from '../../src/utils/database';
 import { userService } from '../../src/services/user.service';
 import { initApolloClient } from '../utils/apollo-client';
 import {
-    AUTHOR_BY_ID_QUERY, AUTHORS_QUERY,
+    AUTHOR_BY_ID_QUERY,
+    AUTHORS_QUERY,
     CREATE_AUTHOR_MUTATION,
     DEL_AUTHOR_MUTATION,
     EDIT_AUTHOR_MUTATION
 } from "./author.api.test.gql";
 import { authorService } from '../../src/services/author.service';
-import { USER_BY_ID_QUERY, USERS_QUERY } from './user.api.test.gql';
 
 describe('Test author api', () => {
 

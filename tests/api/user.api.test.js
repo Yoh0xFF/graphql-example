@@ -14,7 +14,7 @@ describe('Test user api', () => {
 
         const user = await userService.createUser({
             fullName: 'Test user',
-            email: `user_${ Date.now() }@mail.com`,
+            email: `user_${Date.now()}@mail.com`,
             password: 'Test12345_'
         });
         const { id } = user;
@@ -38,12 +38,12 @@ describe('Test user api', () => {
 
         const user = await userService.createUser({
             fullName: 'Test user',
-            email: `user_${ Date.now() }@mail.com`,
+            email: `user_${Date.now()}@mail.com`,
             password: 'Test12345_'
         });
         const { id } = user;
         const newFullName = 'Test user 123';
-        const newEmail = `user_${ Date.now() }@mail.com`;
+        const newEmail = `user_${Date.now()}@mail.com`;
         await userService.deleteUser(id);
 
         const { mutate } = await initApolloClient({ authUser: admin });
@@ -62,12 +62,12 @@ describe('Test user api', () => {
 
         const user = await userService.createUser({
             fullName: 'Test user',
-            email: `user_${ Date.now() }@mail.com`,
+            email: `user_${Date.now()}@mail.com`,
             password: 'Test12345_'
         });
         const { id } = user;
         const newFullName = 'Test user 123';
-        const newEmail = `user_${ Date.now() }@mail.com`;
+        const newEmail = `user_${Date.now()}@mail.com`;
 
         const { mutate } = await initApolloClient({ authUser: admin });
         const { data } = await mutate({
@@ -86,7 +86,7 @@ describe('Test user api', () => {
 
         const user = await userService.createUser({
             fullName: 'Test user',
-            email: `user_${ Date.now() }@mail.com`,
+            email: `user_${Date.now()}@mail.com`,
             password: 'Test12345_'
         });
         const { id } = user;
@@ -106,7 +106,7 @@ describe('Test user api', () => {
 
         const user = await userService.createUser({
             fullName: 'Test user',
-            email: `user_${ Date.now() }@mail.com`,
+            email: `user_${Date.now()}@mail.com`,
             password: 'Test12345_'
         });
         const { id } = user;
@@ -125,7 +125,7 @@ describe('Test user api', () => {
 
         const user = await userService.createUser({
             fullName: 'Test user',
-            email: `user_${ Date.now() }@mail.com`,
+            email: `user_${Date.now()}@mail.com`,
             password: 'Test12345_'
         });
         const { id } = user;
