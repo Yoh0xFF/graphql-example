@@ -1,6 +1,7 @@
 import BaseService from './base.service';
 import User from '../models/user.model';
-import { hash, compare } from 'bcrypt';
+import { compare, hash } from 'bcrypt';
+import { UserInputError } from 'apollo-server-express';
 
 const HASH_ROUNDS = 12;
 
@@ -38,6 +39,21 @@ class UserService extends BaseService {
     }
 
     async editUser(id, editUserReq) {
+        if (!editUserReq.fullName) {
+            delete editUserReq.fullName;
+        }
+        if (!editUserReq.email) {
+            delete editUserReq.email;
+        }
+
+        if (editUserReq.email) {
+            const user = await this.findByEmail(editUserReq.email);
+
+            if (user && user.id !== id) {
+                throw new UserInputError('Email address exists!');
+            }
+        }
+
         await User.query().findById(id).patch(editUserReq);
 
         return this.findById(id);
@@ -46,7 +62,7 @@ class UserService extends BaseService {
     async deleteUser(id) {
         const user = await this.findById(id);
 
-        await User.Query().deleteById(id);
+        await User.query().deleteById(id);
 
         return user;
     }

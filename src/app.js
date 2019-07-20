@@ -2,7 +2,6 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import { ApolloServer } from 'apollo-server-express';
-import { homedir } from 'os';
 import { initDatabase } from './utils/database';
 import { apiExplorer } from './api';
 import { verify } from './utils/jwt';
@@ -11,7 +10,6 @@ import depthLimit from 'graphql-depth-limit';
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'; // Do not reject self signed certificates
 const port = process.env.PORT || 8080;
-const dir = homedir();
 
 // Init database
 initDatabase();

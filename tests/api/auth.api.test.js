@@ -2,33 +2,23 @@ import { initApolloClient } from '../utils/apollo-client';
 import { initDatabase } from '../../src/utils/database';
 import { userService } from '../../src/services/user.service';
 import {
-    AUTH_USER_QUERY, CHANGE_PASSWORD_MUTATION,
-    CHANGE_PASSWORD_MUTATIOn,
+    AUTH_USER_QUERY,
+    CHANGE_PASSWORD_MUTATION,
     LOGIN_MUTATION,
     SIGNUP_MUTATION,
     UPDATE_PERSONAL_INFO_MUTATION
 } from './auth.api.test.gql';
 
-// Apply changes only to this user
-const testEmail = `user_${ Date.now() }@mail.com`;
-
 describe('Test auth api', () => {
 
     beforeAll(async () => {
         initDatabase();
-
-        await userService.createUser({
-            fullName: 'Test user',
-            email: testEmail,
-            password: 'Test12345_'
-        });
     });
 
     test('Test authUser query not authorized', async () => {
         const { query } = await initApolloClient();
 
         const { data, errors } = await query({ query: AUTH_USER_QUERY });
-
         expect(data.authUser).not.toBeTruthy();
         expect(errors.length).toBeTruthy();
         expect(errors[0].extensions.code).toBe('FORBIDDEN');
@@ -38,9 +28,7 @@ describe('Test auth api', () => {
         const user = await userService.findByEmail('user@mail.com');
 
         const { query } = await initApolloClient({ authUser: user });
-
         const { data } = await query({ query: AUTH_USER_QUERY });
-
         expect(data.authUser).toBeTruthy();
         expect(data.authUser.id).toBe('' + user.id);
         expect(data.authUser.email).toBe(user.email);
@@ -56,7 +44,6 @@ describe('Test auth api', () => {
                 password: '123'
             }
         });
-
         expect(data.login).toBeTruthy();
         expect(data.login.success).not.toBeTruthy();
         expect(data.login.token).not.toBeTruthy();
@@ -72,7 +59,6 @@ describe('Test auth api', () => {
                 password: 'Test12345_'
             }
         });
-
         expect(data.login).toBeTruthy();
         expect(data.login.success).toBeTruthy();
         expect(data.login.token).toBeTruthy();
@@ -164,10 +150,13 @@ describe('Test auth api', () => {
     });
 
     test('Test updatePersonalInfo mutation success', async () => {
-        const user = await userService.findByEmail(testEmail);
+        const user = await userService.createUser({
+            fullName: 'Test user',
+            email: `user_${ Date.now() }@mail.com`,
+            password: 'Test12345_'
+        });
 
         const { mutate } = await initApolloClient({ authUser: user });
-
         const { data } = await mutate({
             mutation: UPDATE_PERSONAL_INFO_MUTATION,
             variables: {
@@ -179,10 +168,13 @@ describe('Test auth api', () => {
     });
 
     test('Test changePassword mutation fail, invalid current password', async () => {
-        const user = await userService.findByEmail(testEmail);
+        const user = await userService.createUser({
+            fullName: 'Test user',
+            email: `user_${ Date.now() }@mail.com`,
+            password: 'Test12345_'
+        });
 
         const { mutate } = await initApolloClient({ authUser: user });
-
         const { data } = await mutate({
             mutation: CHANGE_PASSWORD_MUTATION,
             variables: {
@@ -195,10 +187,13 @@ describe('Test auth api', () => {
     });
 
     test('Test changePassword mutation fail, password doesn\'t match', async () => {
-        const user = await userService.findByEmail(testEmail);
+        const user = await userService.createUser({
+            fullName: 'Test user',
+            email: `user_${ Date.now() }@mail.com`,
+            password: 'Test12345_'
+        });
 
         const { mutate } = await initApolloClient({ authUser: user });
-
         const { data, errors } = await mutate({
             mutation: CHANGE_PASSWORD_MUTATION,
             variables: {
@@ -213,10 +208,13 @@ describe('Test auth api', () => {
     });
 
     test('Test changePassword mutation fail, short password', async () => {
-        const user = await userService.findByEmail(testEmail);
+        const user = await userService.createUser({
+            fullName: 'Test user',
+            email: `user_${ Date.now() }@mail.com`,
+            password: 'Test12345_'
+        });
 
         const { mutate } = await initApolloClient({ authUser: user });
-
         const { data, errors } = await mutate({
             mutation: CHANGE_PASSWORD_MUTATION,
             variables: {
@@ -231,10 +229,13 @@ describe('Test auth api', () => {
     });
 
     test('Test changePassword mutation success', async () => {
-        const user = await userService.findByEmail(testEmail);
+        const user = await userService.createUser({
+            fullName: 'Test user',
+            email: `user_${ Date.now() }@mail.com`,
+            password: 'Test12345_'
+        });
 
         const { mutate } = await initApolloClient({ authUser: user });
-
         let { data } = await mutate({
             mutation: CHANGE_PASSWORD_MUTATION,
             variables: {
@@ -248,7 +249,7 @@ describe('Test auth api', () => {
         data = (await mutate({
             mutation: LOGIN_MUTATION,
             variables: {
-                email: testEmail,
+                email: user.email,
                 password: 'Test12345678_'
             }
         })).data;
