@@ -44,9 +44,11 @@ class BookService extends BaseService {
             await Book.query(trx).findById(id).patch(editBookReq);
             const book = await Book.query(trx).findById(id);
 
-            await book.$relatedQuery('authors', trx).unrelate();
-            for (const authorId of authorIds) {
-                await book.$relatedQuery('authors', trx).relate(authorId);
+            if (book) {
+                await book.$relatedQuery('authors', trx).unrelate();
+                for (const authorId of authorIds) {
+                    await book.$relatedQuery('authors', trx).relate(authorId);
+                }
             }
 
             await trx.commit();
@@ -59,11 +61,25 @@ class BookService extends BaseService {
     }
 
     async deleteBook(id) {
-        const book = await this.findById(id);
+        let trx;
+        try {
+            trx = await transaction.start(Book.knex());
 
-        await Book.Query().deleteById(id);
+            const book = await Book.query(trx).findById(id);
 
-        return book;
+            if (book) {
+                await book.$relatedQuery('authors', trx).unrelate();
+
+                await Book.query(trx).deleteById(id);
+            }
+
+            await trx.commit();
+
+            return book;
+        } catch (err) {
+            await trx.rollback();
+            throw err;
+        }
     }
 
     async findByAuthor(authorId) {

@@ -145,7 +145,7 @@ describe('Test author api', () => {
         const { id } = author;
 
         const { query } = await initApolloClient({ authUser: user });
-        const { data } = await query({ query: AUTHORS_QUERY, variables: { id } });
+        const { data } = await query({ query: AUTHORS_QUERY });
         expect(data.authors).toBeTruthy();
         expect(Array.isArray(data.authors)).toBeTruthy();
     });
