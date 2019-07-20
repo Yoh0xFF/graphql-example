@@ -13,8 +13,8 @@ export const resolvers = {
             return authorService.findById(id);
         },
 
-        authors: (obj, args, context, info) => {
-            return authorService.findAll();
+        authors: (obj, { first, offset }, context, info) => {
+            return authorService.findAll(first, offset);
         }
     },
 

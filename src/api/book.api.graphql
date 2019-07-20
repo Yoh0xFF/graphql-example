@@ -4,7 +4,7 @@ extend type Query {
 
     booksByAuthor(authorId: Int): [Book!]!
 
-    books: [Book!]!
+    books(first: Int, offset: Int): [Book!]!
 }
 
 extend type Mutation {

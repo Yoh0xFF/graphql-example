@@ -2,7 +2,7 @@ extend type Query {
 
     authorById(id: ID!): Author
 
-    authors: [Author!]!
+    authors(first: Int, offset: Int): [Author!]!
 }
 
 extend type Mutation {

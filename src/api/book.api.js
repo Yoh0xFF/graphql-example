@@ -17,8 +17,8 @@ export const resolvers = {
             return bookService.findByAuthor(authorId);
         },
 
-        books: (obj, args, context, info) => {
-            return bookService.findAll();
+        books: (obj, { first, offset }, context, info) => {
+            return bookService.findAll(first, offset);
         }
     },
 
