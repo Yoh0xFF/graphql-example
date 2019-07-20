@@ -10,6 +10,7 @@ import {
     DEL_BOOK_MUTATION,
     EDIT_BOOK_MUTATION
 } from './book.api.test.gql';
+import { AUTHORS_QUERY } from './author.api.test.gql';
 
 describe('Test book api', () => {
 
@@ -155,6 +156,21 @@ describe('Test book api', () => {
         expect(data.bookById).toBeTruthy();
         expect(data.bookById.title).toBe(title);
         expect(data.bookById.about).toBe(about);
+    });
+
+    test('Test books query fail, limit exceeded', async () => {
+        const user = await userService.findByEmail('user@mail.com');
+
+        const title = 'Test book';
+        const about = 'Test about';
+        const book = await bookService.createBook(user.id, { authorIds, title, about });
+        const { id } = book;
+
+        const { query } = await initApolloTestClient({ authUser: user });
+        const { data, errors } = await query({ query: BOOKS_QUERY, variables: { first: 101, offset: 1 } });
+        expect(data).not.toBeTruthy();
+        expect(errors.length).toBeTruthy();
+        expect(errors[0].extensions.code).toBe('BAD_USER_INPUT');
     });
 
     test('Test books query success', async () => {

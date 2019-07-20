@@ -136,6 +136,21 @@ describe('Test author api', () => {
         expect(data.authorById.about).toBe(about);
     });
 
+    test('Test authors query fail, limit exceeded', async () => {
+        const user = await userService.findByEmail('user@mail.com');
+
+        const fullName = 'Test author';
+        const about = 'Test about';
+        const author = await authorService.createAuthor(user.id, { fullName, about });
+        const { id } = author;
+
+        const { query } = await initApolloTestClient({ authUser: user });
+        const { data, errors } = await query({ query: AUTHORS_QUERY, variables: { first: 101, offset: 1 } });
+        expect(data).not.toBeTruthy();
+        expect(errors.length).toBeTruthy();
+        expect(errors[0].extensions.code).toBe('BAD_USER_INPUT');
+    });
+
     test('Test authors query success', async () => {
         const user = await userService.findByEmail('user@mail.com');
 

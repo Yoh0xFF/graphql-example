@@ -59,8 +59,8 @@ export const BOOK_BY_ID_QUERY = gql`
 `;
 
 export const BOOKS_QUERY = gql`
-    query books {
-        books {
+    query books($first: Int = 10, $offset: Int = 1) {
+        books(first: $first, offset: $offset) {
             id, title, about
         }
     }

@@ -48,8 +48,8 @@ export const AUTHOR_BY_ID_QUERY = gql`
 `;
 
 export const AUTHORS_QUERY = gql`
-    query authors {
-        authors {
+    query authors($first: Int = 10, $offset: Int = 1) {
+        authors(first: $first, offset: $offset) {
             id, fullName, about
         }
     }
