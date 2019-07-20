@@ -1,10 +1,10 @@
-import { initApolloClient } from '../utils/apollo-client';
+import { initApolloTestClient } from '../utils/apollo-test-client';
 import { SAY_HELLO_MUTATION, SAY_HELLO_QUERY } from './root.api.test.gql';
 
 describe('Test root api', () => {
 
     test('Test root query', async () => {
-        const { query } = await initApolloClient();
+        const { query } = await initApolloTestClient();
 
         const { data } = await query({ query: SAY_HELLO_QUERY });
 
@@ -12,7 +12,7 @@ describe('Test root api', () => {
     });
 
     test('Test root mutation', async () => {
-        const { mutate } = await initApolloClient();
+        const { mutate } = await initApolloTestClient();
 
         const { data } = await mutate({ mutation: SAY_HELLO_MUTATION });
 

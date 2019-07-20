@@ -1,6 +1,6 @@
 import { initDatabase } from '../../src/utils/database';
 import { userService } from '../../src/services/user.service';
-import { initApolloClient } from '../utils/apollo-client';
+import { initApolloTestClient } from '../utils/apollo-test-client';
 import { authorService } from '../../src/services/author.service';
 import { bookService } from '../../src/services/book.service';
 import {
@@ -38,7 +38,7 @@ describe('Test book api', () => {
         const title = 'Test book';
         const about = 'Test about';
 
-        const { mutate } = await initApolloClient({ authUser: user });
+        const { mutate } = await initApolloTestClient({ authUser: user });
         const { data } = await mutate({
             mutation: CREATE_BOOK_MUTATION,
             variables: { authorIds, title, about }
@@ -59,7 +59,7 @@ describe('Test book api', () => {
         const { id } = book;
         await bookService.deleteBook(id);
 
-        const { mutate } = await initApolloClient({ authUser: user });
+        const { mutate } = await initApolloTestClient({ authUser: user });
         const { data, errors } = await mutate({
             mutation: EDIT_BOOK_MUTATION,
             variables: { id, authorIds, title, about }
@@ -79,7 +79,7 @@ describe('Test book api', () => {
         const newTitle = 'Test book new';
         const newAbout = 'Test about new';
 
-        const { mutate } = await initApolloClient({ authUser: user });
+        const { mutate } = await initApolloTestClient({ authUser: user });
         const { data } = await mutate({
             mutation: EDIT_BOOK_MUTATION,
             variables: { id, authorIds: newAuthorIds, title: newTitle, about: newAbout }
@@ -100,7 +100,7 @@ describe('Test book api', () => {
         const { id } = book;
         await bookService.deleteBook(id);
 
-        const { mutate } = await initApolloClient({ authUser: user });
+        const { mutate } = await initApolloTestClient({ authUser: user });
         const { data, errors } = await mutate({
             mutation: DEL_BOOK_MUTATION,
             variables: { id }
@@ -117,7 +117,7 @@ describe('Test book api', () => {
         const book = await bookService.createBook(user.id, { authorIds, title, about });
         const { id } = book;
 
-        const { mutate } = await initApolloClient({ authUser: user });
+        const { mutate } = await initApolloTestClient({ authUser: user });
         const { data } = await mutate({
             mutation: DEL_BOOK_MUTATION,
             variables: { id }
@@ -136,7 +136,7 @@ describe('Test book api', () => {
         const { id } = book;
         await bookService.deleteBook(id);
 
-        const { query } = await initApolloClient({ authUser: user });
+        const { query } = await initApolloTestClient({ authUser: user });
         const { data, errors } = await query({ query: BOOK_BY_ID_QUERY, variables: { id } });
         expect(data.bookById).not.toBeTruthy();
         expect(errors).not.toBeTruthy();
@@ -150,7 +150,7 @@ describe('Test book api', () => {
         const book = await bookService.createBook(user.id, { authorIds, title, about });
         const { id } = book;
 
-        const { query } = await initApolloClient({ authUser: user });
+        const { query } = await initApolloTestClient({ authUser: user });
         const { data } = await query({ query: BOOK_BY_ID_QUERY, variables: { id } });
         expect(data.bookById).toBeTruthy();
         expect(data.bookById.title).toBe(title);
@@ -165,7 +165,7 @@ describe('Test book api', () => {
         const book = await bookService.createBook(user.id, { authorIds, title, about });
         const { id } = book;
 
-        const { query } = await initApolloClient({ authUser: user });
+        const { query } = await initApolloTestClient({ authUser: user });
         const { data } = await query({ query: BOOKS_QUERY });
         expect(data.books).toBeTruthy();
         expect(Array.isArray(data.books)).toBeTruthy();

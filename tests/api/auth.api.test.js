@@ -1,4 +1,4 @@
-import { initApolloClient } from '../utils/apollo-client';
+import { initApolloTestClient } from '../utils/apollo-test-client';
 import { initDatabase } from '../../src/utils/database';
 import { userService } from '../../src/services/user.service';
 import {
@@ -16,7 +16,7 @@ describe('Test auth api', () => {
     });
 
     test('Test authUser query not authorized', async () => {
-        const { query } = await initApolloClient();
+        const { query } = await initApolloTestClient();
 
         const { data, errors } = await query({ query: AUTH_USER_QUERY });
         expect(data.authUser).not.toBeTruthy();
@@ -27,7 +27,7 @@ describe('Test auth api', () => {
     test('Test authUser query authorized', async () => {
         const user = await userService.findByEmail('user@mail.com');
 
-        const { query } = await initApolloClient({ authUser: user });
+        const { query } = await initApolloTestClient({ authUser: user });
         const { data } = await query({ query: AUTH_USER_QUERY });
         expect(data.authUser).toBeTruthy();
         expect(data.authUser.id).toBe('' + user.id);
@@ -35,7 +35,7 @@ describe('Test auth api', () => {
     });
 
     test('Test login mutation fail', async () => {
-        const { mutate } = await initApolloClient();
+        const { mutate } = await initApolloTestClient();
 
         const { data } = await mutate({
             mutation: LOGIN_MUTATION,
@@ -50,7 +50,7 @@ describe('Test auth api', () => {
     });
 
     test('Test login mutation success', async () => {
-        const { mutate } = await initApolloClient();
+        const { mutate } = await initApolloTestClient();
 
         const { data } = await mutate({
             mutation: LOGIN_MUTATION,
@@ -65,7 +65,7 @@ describe('Test auth api', () => {
     });
 
     test('Test signup mutation fail, email exists', async () => {
-        const { mutate } = await initApolloClient();
+        const { mutate } = await initApolloTestClient();
 
         const { data, errors } = await mutate({
             mutation: SIGNUP_MUTATION,
@@ -82,7 +82,7 @@ describe('Test auth api', () => {
     });
 
     test('Test signup mutation fail, invalid email', async () => {
-        const { mutate } = await initApolloClient();
+        const { mutate } = await initApolloTestClient();
 
         const { data, errors } = await mutate({
             mutation: SIGNUP_MUTATION,
@@ -99,7 +99,7 @@ describe('Test auth api', () => {
     });
 
     test('Test signup mutation fail, short password', async () => {
-        const { mutate } = await initApolloClient();
+        const { mutate } = await initApolloTestClient();
 
         const { data, errors } = await mutate({
             mutation: SIGNUP_MUTATION,
@@ -116,7 +116,7 @@ describe('Test auth api', () => {
     });
 
     test('Test signup mutation fail, password doesn\'t match', async () => {
-        const { mutate } = await initApolloClient();
+        const { mutate } = await initApolloTestClient();
 
         const { data, errors } = await mutate({
             mutation: SIGNUP_MUTATION,
@@ -133,7 +133,7 @@ describe('Test auth api', () => {
     });
 
     test('Test signup mutation success', async () => {
-        const { mutate } = await initApolloClient();
+        const { mutate } = await initApolloTestClient();
 
         const { data, errors } = await mutate({
             mutation: SIGNUP_MUTATION,
@@ -156,7 +156,7 @@ describe('Test auth api', () => {
             password: 'Test12345_'
         });
 
-        const { mutate } = await initApolloClient({ authUser: user });
+        const { mutate } = await initApolloTestClient({ authUser: user });
         const { data } = await mutate({
             mutation: UPDATE_PERSONAL_INFO_MUTATION,
             variables: {
@@ -174,7 +174,7 @@ describe('Test auth api', () => {
             password: 'Test12345_'
         });
 
-        const { mutate } = await initApolloClient({ authUser: user });
+        const { mutate } = await initApolloTestClient({ authUser: user });
         const { data } = await mutate({
             mutation: CHANGE_PASSWORD_MUTATION,
             variables: {
@@ -193,7 +193,7 @@ describe('Test auth api', () => {
             password: 'Test12345_'
         });
 
-        const { mutate } = await initApolloClient({ authUser: user });
+        const { mutate } = await initApolloTestClient({ authUser: user });
         const { data, errors } = await mutate({
             mutation: CHANGE_PASSWORD_MUTATION,
             variables: {
@@ -214,7 +214,7 @@ describe('Test auth api', () => {
             password: 'Test12345_'
         });
 
-        const { mutate } = await initApolloClient({ authUser: user });
+        const { mutate } = await initApolloTestClient({ authUser: user });
         const { data, errors } = await mutate({
             mutation: CHANGE_PASSWORD_MUTATION,
             variables: {
@@ -235,7 +235,7 @@ describe('Test auth api', () => {
             password: 'Test12345_'
         });
 
-        const { mutate } = await initApolloClient({ authUser: user });
+        const { mutate } = await initApolloTestClient({ authUser: user });
         let { data } = await mutate({
             mutation: CHANGE_PASSWORD_MUTATION,
             variables: {

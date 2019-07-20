@@ -1,4 +1,4 @@
-import { initApolloClient } from '../utils/apollo-client';
+import { initApolloTestClient } from '../utils/apollo-test-client';
 import { userService } from '../../src/services/user.service';
 import { DEL_USER_MUTATION, EDIT_USER_MUTATION, USER_BY_ID_QUERY, USERS_QUERY } from './user.api.test.gql';
 import { initDatabase } from '../../src/utils/database';
@@ -21,7 +21,7 @@ describe('Test user api', () => {
         const newFullName = 'Test user 123';
         const newEmail = 'admin@mail.com';
 
-        const { mutate } = await initApolloClient({ authUser: admin });
+        const { mutate } = await initApolloTestClient({ authUser: admin });
         const { data, errors } = await mutate({
             mutation: EDIT_USER_MUTATION,
             variables: {
@@ -46,7 +46,7 @@ describe('Test user api', () => {
         const newEmail = `user_${Date.now()}@mail.com`;
         await userService.deleteUser(id);
 
-        const { mutate } = await initApolloClient({ authUser: admin });
+        const { mutate } = await initApolloTestClient({ authUser: admin });
         const { data, errors } = await mutate({
             mutation: EDIT_USER_MUTATION,
             variables: {
@@ -69,7 +69,7 @@ describe('Test user api', () => {
         const newFullName = 'Test user 123';
         const newEmail = `user_${Date.now()}@mail.com`;
 
-        const { mutate } = await initApolloClient({ authUser: admin });
+        const { mutate } = await initApolloTestClient({ authUser: admin });
         const { data } = await mutate({
             mutation: EDIT_USER_MUTATION,
             variables: {
@@ -92,7 +92,7 @@ describe('Test user api', () => {
         const { id } = user;
         await userService.deleteUser(id);
 
-        const { mutate } = await initApolloClient({ authUser: admin });
+        const { mutate } = await initApolloTestClient({ authUser: admin });
         const { data, errors } = await mutate({
             mutation: DEL_USER_MUTATION,
             variables: { id }
@@ -111,7 +111,7 @@ describe('Test user api', () => {
         });
         const { id } = user;
 
-        const { mutate } = await initApolloClient({ authUser: admin });
+        const { mutate } = await initApolloTestClient({ authUser: admin });
         const { data, errors } = await mutate({
             mutation: DEL_USER_MUTATION,
             variables: { id }
@@ -131,7 +131,7 @@ describe('Test user api', () => {
         const { id } = user;
         await userService.deleteUser(id);
 
-        const { query } = await initApolloClient({ authUser: admin });
+        const { query } = await initApolloTestClient({ authUser: admin });
         const { data } = await query({ query: USER_BY_ID_QUERY, variables: { id } });
         expect(data.userById).not.toBeTruthy();
     });
@@ -139,7 +139,7 @@ describe('Test user api', () => {
     test('Test userById query success', async () => {
         const admin = await userService.findByEmail('admin@mail.com');
 
-        const { query } = await initApolloClient({ authUser: admin });
+        const { query } = await initApolloTestClient({ authUser: admin });
         const { data } = await query({ query: USER_BY_ID_QUERY, variables: { id: 1 } });
         expect(data.userById).toBeTruthy();
         expect(data.userById.id).toBe('1');
@@ -148,7 +148,7 @@ describe('Test user api', () => {
     test('Test users query success', async () => {
         const admin = await userService.findByEmail('admin@mail.com');
 
-        const { query } = await initApolloClient({ authUser: admin });
+        const { query } = await initApolloTestClient({ authUser: admin });
         const { data } = await query({ query: USERS_QUERY });
         expect(data.users).toBeTruthy();
         expect(Array.isArray(data.users)).toBeTruthy();
