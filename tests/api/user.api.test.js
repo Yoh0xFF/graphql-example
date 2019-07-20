@@ -151,5 +151,6 @@ describe('Test user api', () => {
         const { query } = await initApolloClient({ authUser: admin });
         const { data } = await query({ query: USERS_QUERY });
         expect(data.users).toBeTruthy();
+        expect(Array.isArray(data.users)).toBeTruthy();
     });
 });

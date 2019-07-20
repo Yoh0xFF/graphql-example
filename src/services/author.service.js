@@ -24,7 +24,7 @@ class AuthorService extends BaseService {
     async deleteAuthor(id) {
         const author = await this.findById(id);
 
-        await Author.Query().deleteById(id);
+        await Author.query().deleteById(id);
 
         return author;
     }
