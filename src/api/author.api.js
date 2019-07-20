@@ -3,7 +3,7 @@ import { authorService } from '../services/author.service';
 import { BookByAuthorDataLoader } from '../dataloaders/book.dataloader';
 import { UserDataLoader } from '../dataloaders/user.dataloader';
 
-export const typeDefs = readFileSync(`${ __dirname }/author.api.graphqls`, 'utf8');
+export const typeDefs = readFileSync(`${ __dirname }/author.api.graphql`, 'utf8');
 
 export const resolvers = {
 

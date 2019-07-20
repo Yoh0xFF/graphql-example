@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 import { GraphQLDate, GraphQLDateTime, GraphQLTime } from 'graphql-iso-date';
 
-export const typeDefs = readFileSync(`${ __dirname }/root.api.graphqls`, 'utf8');
+export const typeDefs = readFileSync(`${ __dirname }/root.api.graphql`, 'utf8');
 
 export const resolvers = {
 
