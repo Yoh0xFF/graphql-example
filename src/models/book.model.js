@@ -2,6 +2,7 @@ import BaseModel from './base.model';
 import { Model } from 'objection';
 
 export default class Book extends BaseModel {
+
     static tableName = 'books';
 
     static jsonSchema = {
@@ -51,4 +52,5 @@ export default class Book extends BaseModel {
             }
         }
     };
+
 }

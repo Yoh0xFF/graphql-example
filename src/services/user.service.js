@@ -6,6 +6,7 @@ import { UserInputError } from 'apollo-server-express';
 const HASH_ROUNDS = 12;
 
 class UserService extends BaseService {
+
     constructor() {
         super(User);
     }
@@ -85,6 +86,7 @@ class UserService extends BaseService {
     async findByEmail(email) {
         return User.query().findOne('email', email);
     }
+
 }
 
 export const userService = new UserService();

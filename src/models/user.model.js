@@ -1,6 +1,7 @@
 import BaseModel from './base.model';
 
 export default class User extends BaseModel {
+
     static tableName = 'users';
 
     static jsonSchema = {
@@ -20,4 +21,5 @@ export default class User extends BaseModel {
             'fullName', 'email', 'role'
         ]
     };
+
 }

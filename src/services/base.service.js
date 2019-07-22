@@ -1,4 +1,5 @@
 export default class BaseService {
+
     constructor(model) {
         this.model = model;
     }
@@ -17,4 +18,5 @@ export default class BaseService {
 
         return this.model.query().offset(offset).limit(first);
     }
+
 }

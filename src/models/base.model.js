@@ -1,6 +1,7 @@
 import { Model } from 'objection';
 
 export default class BaseModel extends Model {
+
     $beforeValidate(jsonSchema, json, opt) {
         Object.keys(jsonSchema.properties).forEach(prop => {
             const propSchema = jsonSchema.properties[prop];
@@ -40,4 +41,5 @@ export default class BaseModel extends Model {
 
         return json;
     }
+
 }

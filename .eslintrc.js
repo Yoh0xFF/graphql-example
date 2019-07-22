@@ -26,6 +26,11 @@ module.exports = {
             'anonymous': 'never',
             'named': 'never',
             'asyncArrow': 'always'
+        }],
+        'padded-blocks': ['error', {
+            'blocks': 'never',
+            'classes': 'always',
+            'switches': 'never'
         }]
     }
 };

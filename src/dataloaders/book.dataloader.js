@@ -2,6 +2,7 @@ import DataLoader from 'dataloader';
 import { authorService } from '../services/author.service';
 
 export class BookByAuthorDataLoader extends DataLoader {
+
     constructor() {
         const batchLoader = authorIds => {
             return authorService
@@ -23,4 +24,5 @@ export class BookByAuthorDataLoader extends DataLoader {
 
         return context.bookByAuthorDataLoader;
     }
+
 }

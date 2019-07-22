@@ -2,6 +2,7 @@ import DataLoader from 'dataloader';
 import { userService } from '../services/user.service';
 
 export class UserDataLoader extends DataLoader {
+
     constructor() {
         const batchLoader = userIds => {
             return userService
@@ -23,4 +24,5 @@ export class UserDataLoader extends DataLoader {
 
         return context.userDataLoader;
     }
+
 }

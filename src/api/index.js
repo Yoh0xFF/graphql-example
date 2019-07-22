@@ -6,6 +6,7 @@ import { applyMiddleware } from 'graphql-middleware';
 import { shield } from 'graphql-shield';
 
 class ApiExplorer {
+
     constructor() {
         this._read = true;
         this._typeDefs = [];
@@ -74,6 +75,7 @@ class ApiExplorer {
                 fallbackError: new ForbiddenError('Not Authorised!')
             }));
     }
+
 }
 
 export const apiExplorer = new ApiExplorer();

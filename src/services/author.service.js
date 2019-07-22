@@ -2,6 +2,7 @@ import Author from '../models/author.model';
 import BaseService from './base.service';
 
 class AuthorService extends BaseService {
+
     constructor() {
         super(Author);
     }
@@ -36,6 +37,7 @@ class AuthorService extends BaseService {
                 builder.orderBy('createdAt', 'desc').limit(10);
             });
     }
+
 }
 
 export const authorService = new AuthorService();

@@ -3,7 +3,7 @@ const tableName = 'authors';
 exports.up = (knex, Promise) => {
     return knex
         .schema
-        .createTable(tableName, function (t) {
+        .createTable(tableName, (t) => {
             t.increments('id').unsigned().notNullable().primary();
             t.integer('creator_id').unsigned().notNullable();
             t.dateTime('created_at').notNullable();

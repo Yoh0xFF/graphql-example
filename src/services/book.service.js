@@ -3,6 +3,7 @@ import Book from '../models/book.model';
 import { transaction } from 'objection';
 
 class BookService extends BaseService {
+
     constructor() {
         super(Book);
     }
@@ -90,6 +91,7 @@ class BookService extends BaseService {
             .whereIn('id', bookIds)
             .eager('authors');
     }
+
 }
 
 export const bookService = new BookService();
