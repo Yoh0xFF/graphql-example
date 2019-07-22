@@ -4,10 +4,11 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "watch": "export DEBUG=knex:query && knex migrate:latest && knex seed:run && nodemon --exec babel-node src/app.js",
+        "migrate": "knex migrate:latest && knex seed:run",
+        "watch": "export DEBUG=knex:query && npm run migrate && nodemon --exec babel-node src/app.js",
         "build": "babel src --out-dir dist --copy-files",
-        "serve": "npm run build && knex migrate:latest && knex seed:run && node dist/app.js",
-        "test": "jest"
+        "serve": "npm run build && npm run migrate && node dist/app.js",
+        "test": "npm run migrate && jest -i"
     },
     "author": "",
     "license": "ISC",
