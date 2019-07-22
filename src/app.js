@@ -32,9 +32,7 @@ apiExplorer.getSchema()
                 const context = {};
 
                 // Verify jwt token
-                const parts = req.headers.authorization ? req.headers.authorization.split(' ') : [''];
-                const token = parts.length === 2 && parts[0].toLowerCase() === 'bearer' ? parts[1] : undefined;
-                context.authUser = token ? verify(token) : undefined;
+                context.authUser = verify(req, res);
 
                 return context;
             },
