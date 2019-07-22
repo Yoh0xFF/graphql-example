@@ -3,7 +3,7 @@ const tableName = 'users';
 exports.up = (knex, Promise) => {
     return knex
         .schema
-        .createTable(tableName, function (t) {
+        .createTable(tableName, (t) => {
             t.increments('id').unsigned().notNullable().primary();
             t.dateTime('created_at').notNullable();
             t.dateTime('updated_at').notNullable();

@@ -6,7 +6,6 @@ import { UserInputError } from 'apollo-server-express';
 const HASH_ROUNDS = 12;
 
 class UserService extends BaseService {
-
     constructor() {
         super(User);
     }
@@ -76,7 +75,9 @@ class UserService extends BaseService {
 
         newPassword = await hash(newPassword, HASH_ROUNDS);
 
-        await User.query().findById(id).patch({ password: newPassword });
+        await User.query().findById(id).patch({
+            password: newPassword
+        });
 
         return true;
     }

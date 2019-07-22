@@ -2,7 +2,6 @@ import Author from '../models/author.model';
 import BaseService from './base.service';
 
 class AuthorService extends BaseService {
-
     constructor() {
         super(Author);
     }

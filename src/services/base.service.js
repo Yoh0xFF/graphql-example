@@ -1,5 +1,4 @@
 export default class BaseService {
-
     constructor(model) {
         this.model = model;
     }

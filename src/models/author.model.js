@@ -2,7 +2,6 @@ import BaseModel from './base.model';
 import { Model } from 'objection';
 
 export default class Author extends BaseModel {
-
     static tableName = 'authors';
 
     static jsonSchema = {

@@ -19,30 +19,40 @@ export const resolvers = {
             const user = await userService.login(email, password);
 
             if (!user) {
-                return { success: false, message: 'Invalid authentication credentials!', token: undefined };
+                return {
+                    success: false, message: 'Invalid authentication credentials!', token: undefined
+                };
             }
 
             const token = sign(user.$toJson());
 
-            return { success: true, message: 'Success!', token };
+            return {
+                success: true, message: 'Success!', token
+            };
         },
 
         signup: async (obj, { signupReq }, context, info) => {
             if (await userService.findByEmail(signupReq.email)) {
-                return { success: false, message: 'Email address exists!', user: undefined };
+                return {
+                    success: false, message: 'Email address exists!', user: undefined
+                };
             }
 
             const user = await userService.createUser(signupReq);
 
-            return { success: true, message: 'Success!', user };
+            return {
+                success: true, message: 'Success!', user
+            };
         },
 
         updatePersonalInfo: (obj, { fullName }, { authUser }, info) => {
-            return userService.editUser(authUser.id, { fullName })
+            return userService.editUser(authUser.id, {
+                fullName
+            });
         },
 
-        changePassword: async (obj, { password, newPassword, reNewPassword }, { authUser }, info) => {
-            return await userService.changePassword(authUser.id, password, newPassword);
-        },
+        changePassword: (obj, { password, newPassword, reNewPassword }, { authUser }, info) => {
+            return userService.changePassword(authUser.id, password, newPassword);
+        }
     }
 };

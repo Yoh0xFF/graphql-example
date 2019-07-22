@@ -1,8 +1,8 @@
 import { UserInputError } from 'apollo-server-express';
-import passwordValidator from 'password-validator';
+import PasswordValidator from 'password-validator';
 import { isEmail } from 'validator';
 
-const passwordSchema = new passwordValidator()
+const passwordSchema = new PasswordValidator()
     .is().min(8)
     .is().max(20)
     .has().letters()

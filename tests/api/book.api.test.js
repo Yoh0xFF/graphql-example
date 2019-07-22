@@ -10,10 +10,8 @@ import {
     DEL_BOOK_MUTATION,
     EDIT_BOOK_MUTATION
 } from './book.api.test.gql';
-import { AUTHORS_QUERY } from './author.api.test.gql';
 
 describe('Test book api', () => {
-
     const authors = [];
     const authorIds = [];
 
@@ -22,9 +20,15 @@ describe('Test book api', () => {
 
         const user = await userService.findByEmail('user@mail.com');
 
-        const author1 = await authorService.createAuthor(user.id, { fullName: 'Test author 1' });
-        const author2 = await authorService.createAuthor(user.id, { fullName: 'Test author 2' });
-        const author3 = await authorService.createAuthor(user.id, { fullName: 'Test author 3' });
+        const author1 = await authorService.createAuthor(user.id, {
+            fullName: 'Test author 1'
+        });
+        const author2 = await authorService.createAuthor(user.id, {
+            fullName: 'Test author 2'
+        });
+        const author3 = await authorService.createAuthor(user.id, {
+            fullName: 'Test author 3'
+        });
         authors.push(author1);
         authors.push(author2);
         authors.push(author3);
@@ -39,10 +43,14 @@ describe('Test book api', () => {
         const title = 'Test book';
         const about = 'Test about';
 
-        const { mutate } = await initApolloTestClient({ authUser: user });
+        const { mutate } = await initApolloTestClient({
+            authUser: user
+        });
         const { data } = await mutate({
             mutation: CREATE_BOOK_MUTATION,
-            variables: { authorIds, title, about }
+            variables: {
+                authorIds, title, about
+            }
         });
         expect(data.createBook).toBeTruthy();
         expect(data.createBook.creator.id).toBe('' + user.id);
@@ -56,14 +64,20 @@ describe('Test book api', () => {
 
         const title = 'Test book';
         const about = 'Test about';
-        const book = await bookService.createBook(user.id, { authorIds, title, about });
+        const book = await bookService.createBook(user.id, {
+            authorIds, title, about
+        });
         const { id } = book;
         await bookService.deleteBook(id);
 
-        const { mutate } = await initApolloTestClient({ authUser: user });
+        const { mutate } = await initApolloTestClient({
+            authUser: user
+        });
         const { data, errors } = await mutate({
             mutation: EDIT_BOOK_MUTATION,
-            variables: { id, authorIds, title, about }
+            variables: {
+                id, authorIds, title, about
+            }
         });
         expect(data.editBook).not.toBeTruthy();
         expect(errors).not.toBeTruthy();
@@ -74,16 +88,22 @@ describe('Test book api', () => {
 
         const title = 'Test book';
         const about = 'Test about';
-        const book = await bookService.createBook(user.id, { authorIds, title, about });
+        const book = await bookService.createBook(user.id, {
+            authorIds, title, about
+        });
         const { id } = book;
         const newAuthorIds = [authorIds[0]];
         const newTitle = 'Test book new';
         const newAbout = 'Test about new';
 
-        const { mutate } = await initApolloTestClient({ authUser: user });
+        const { mutate } = await initApolloTestClient({
+            authUser: user
+        });
         const { data } = await mutate({
             mutation: EDIT_BOOK_MUTATION,
-            variables: { id, authorIds: newAuthorIds, title: newTitle, about: newAbout }
+            variables: {
+                id, authorIds: newAuthorIds, title: newTitle, about: newAbout
+            }
         });
         expect(data.editBook).toBeTruthy();
         expect(data.editBook.authors.length).toBe(newAuthorIds.length);
@@ -97,14 +117,20 @@ describe('Test book api', () => {
 
         const title = 'Test book';
         const about = 'Test about';
-        const book = await bookService.createBook(user.id, { authorIds, title, about });
+        const book = await bookService.createBook(user.id, {
+            authorIds, title, about
+        });
         const { id } = book;
         await bookService.deleteBook(id);
 
-        const { mutate } = await initApolloTestClient({ authUser: user });
+        const { mutate } = await initApolloTestClient({
+            authUser: user
+        });
         const { data, errors } = await mutate({
             mutation: DEL_BOOK_MUTATION,
-            variables: { id }
+            variables: {
+                id
+            }
         });
         expect(data.deleteBook).not.toBeTruthy();
         expect(errors).not.toBeTruthy();
@@ -115,13 +141,19 @@ describe('Test book api', () => {
 
         const title = 'Test book';
         const about = 'Test about';
-        const book = await bookService.createBook(user.id, { authorIds, title, about });
+        const book = await bookService.createBook(user.id, {
+            authorIds, title, about
+        });
         const { id } = book;
 
-        const { mutate } = await initApolloTestClient({ authUser: user });
+        const { mutate } = await initApolloTestClient({
+            authUser: user
+        });
         const { data } = await mutate({
             mutation: DEL_BOOK_MUTATION,
-            variables: { id }
+            variables: {
+                id
+            }
         });
         expect(data.deleteBook).toBeTruthy();
         expect(data.deleteBook.title).toBe(title);
@@ -133,12 +165,21 @@ describe('Test book api', () => {
 
         const title = 'Test book';
         const about = 'Test about';
-        const book = await bookService.createBook(user.id, { authorIds, title, about });
+        const book = await bookService.createBook(user.id, {
+            authorIds, title, about
+        });
         const { id } = book;
         await bookService.deleteBook(id);
 
-        const { query } = await initApolloTestClient({ authUser: user });
-        const { data, errors } = await query({ query: BOOK_BY_ID_QUERY, variables: { id } });
+        const { query } = await initApolloTestClient({
+            authUser: user
+        });
+        const { data, errors } = await query({
+            query: BOOK_BY_ID_QUERY,
+            variables: {
+                id
+            }
+        });
         expect(data.bookById).not.toBeTruthy();
         expect(errors).not.toBeTruthy();
     });
@@ -148,11 +189,20 @@ describe('Test book api', () => {
 
         const title = 'Test book';
         const about = 'Test about';
-        const book = await bookService.createBook(user.id, { authorIds, title, about });
+        const book = await bookService.createBook(user.id, {
+            authorIds, title, about
+        });
         const { id } = book;
 
-        const { query } = await initApolloTestClient({ authUser: user });
-        const { data } = await query({ query: BOOK_BY_ID_QUERY, variables: { id } });
+        const { query } = await initApolloTestClient({
+            authUser: user
+        });
+        const { data } = await query({
+            query: BOOK_BY_ID_QUERY,
+            variables: {
+                id
+            }
+        });
         expect(data.bookById).toBeTruthy();
         expect(data.bookById.title).toBe(title);
         expect(data.bookById.about).toBe(about);
@@ -163,11 +213,19 @@ describe('Test book api', () => {
 
         const title = 'Test book';
         const about = 'Test about';
-        const book = await bookService.createBook(user.id, { authorIds, title, about });
-        const { id } = book;
+        await bookService.createBook(user.id, {
+            authorIds, title, about
+        });
 
-        const { query } = await initApolloTestClient({ authUser: user });
-        const { data, errors } = await query({ query: BOOKS_QUERY, variables: { first: 101, offset: 1 } });
+        const { query } = await initApolloTestClient({
+            authUser: user
+        });
+        const { data, errors } = await query({
+            query: BOOKS_QUERY,
+            variables: {
+                first: 101, offset: 1
+            }
+        });
         expect(data).not.toBeTruthy();
         expect(errors.length).toBeTruthy();
         expect(errors[0].extensions.code).toBe('BAD_USER_INPUT');
@@ -178,11 +236,16 @@ describe('Test book api', () => {
 
         const title = 'Test book';
         const about = 'Test about';
-        const book = await bookService.createBook(user.id, { authorIds, title, about });
-        const { id } = book;
+        await bookService.createBook(user.id, {
+            authorIds, title, about
+        });
 
-        const { query } = await initApolloTestClient({ authUser: user });
-        const { data } = await query({ query: BOOKS_QUERY });
+        const { query } = await initApolloTestClient({
+            authUser: user
+        });
+        const { data } = await query({
+            query: BOOKS_QUERY
+        });
         expect(data.books).toBeTruthy();
         expect(Array.isArray(data.books)).toBeTruthy();
     });

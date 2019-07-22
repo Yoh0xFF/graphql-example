@@ -3,7 +3,7 @@ const tableName = 'author_books';
 exports.up = (knex, Promise) => {
     return knex
         .schema
-        .createTable(tableName, function (t) {
+        .createTable(tableName, (t) => {
             t.integer('author_id').unsigned().notNullable();
             t.integer('book_id').unsigned().notNullable();
 

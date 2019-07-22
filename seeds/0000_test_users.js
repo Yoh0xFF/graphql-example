@@ -1,4 +1,4 @@
-exports.seed = function (knex) {
+exports.seed = (knex) => {
     return knex('users')
         .count('id as cnt')
         .then((rows) => {
@@ -28,6 +28,6 @@ exports.seed = function (knex) {
                             role: 'USER_MANAGER'
                         }
                     ]
-                )
+                );
         });
 };

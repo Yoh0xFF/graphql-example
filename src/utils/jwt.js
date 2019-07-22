@@ -15,7 +15,9 @@ export function sign(payload) {
 
 export function verify(token) {
     try {
-        return jwt.verify(token, secret, { issuer: 'example.io' });
+        return jwt.verify(token, secret, {
+            issuer: 'example.io'
+        });
     } catch (err) {
         if (err.name !== 'TokenExpiredError') {
             logger.error('JWT token check failed', err);

@@ -7,12 +7,12 @@ export const logger = winston.createLogger({
     format: combine(
         timestamp(),
         json(),
-        prettyPrint({ colorize: true })
+        prettyPrint({
+            colorize: true
+        })
     )
 });
 
 if (process.env.NODE_ENV !== 'production') {
     logger.add(new winston.transports.Console());
 }
-
-

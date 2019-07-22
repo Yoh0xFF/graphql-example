@@ -9,4 +9,3 @@ export const permissions = {
         signup: allow
     }
 };
-

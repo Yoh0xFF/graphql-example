@@ -3,7 +3,6 @@ import Book from '../models/book.model';
 import { transaction } from 'objection';
 
 class BookService extends BaseService {
-
     constructor() {
         super(Book);
     }

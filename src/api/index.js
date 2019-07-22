@@ -6,7 +6,6 @@ import { applyMiddleware } from 'graphql-middleware';
 import { shield } from 'graphql-shield';
 
 class ApiExplorer {
-
     constructor() {
         this._read = true;
         this._typeDefs = [];
@@ -15,7 +14,7 @@ class ApiExplorer {
         this._validators = {};
     }
 
-    _merge (target, source) {
+    _merge(target, source) {
         target.Query = target.Query ? target.Query : {};
         source.Query = source.Query ? source.Query : {};
         target.Mutation = target.Mutation ? target.Mutation : {};
