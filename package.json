@@ -1,8 +1,12 @@
 {
     "name": "graphql-example",
+    "description": "Sample project demonstrating common things to consider when working on GraphQL API",
     "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
+    "main": "dist/app.js",
+    "author": "Ioram Gordadze <Yoh0xFF@gmail.com>",
+    "license": "MIT",
+    "repository": "https://github.com/Yoh0xFF/graphql-example",
+
     "scripts": {
         "migrate": "knex migrate:latest && knex seed:run",
         "watch": "export DEBUG=knex:query && npm run migrate && nodemon --exec babel-node src/app.js",
@@ -10,8 +14,7 @@
         "serve": "npm run build && npm run migrate && node dist/app.js",
         "test": "npm run migrate && jest -i"
     },
-    "author": "",
-    "license": "ISC",
+
     "dependencies": {
         "apollo-server-express": "2.6.9",
         "bcrypt": "3.0.6",
@@ -37,6 +40,7 @@
         "validator": "11.1.0",
         "winston": "3.2.1"
     },
+
     "devDependencies": {
         "@babel/cli": "7.5.0",
         "@babel/core": "7.5.4",
