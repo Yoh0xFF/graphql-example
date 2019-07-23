@@ -1,6 +1,6 @@
 {
     "name": "graphql-example",
-    "description": "Sample project demonstrating common things to consider when working on GraphQL API",
+    "description": "Sample project demonstrating common issues to consider when working on GraphQL API",
     "version": "1.0.0",
     "main": "dist/app.js",
     "author": "Ioram Gordadze <Yoh0xFF@gmail.com>",
