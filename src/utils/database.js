@@ -25,3 +25,7 @@ export function initDatabase() {
 
     Model.knex(databaseClient);
 }
+
+export async function closeDatabase() {
+    await Model.knex().destroy();
+}

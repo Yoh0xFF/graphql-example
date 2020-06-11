@@ -1,16 +1,25 @@
-import { initDatabase } from '../../src/utils/database';
+import { closeDatabase, initDatabase } from '../../src/utils/database';
 import { userService } from '../../src/services/user.service';
 import { initApolloTestClient } from '../utils/apollo-test-client';
-import { AUTHOR_BY_ID_QUERY,
+import {
+    AUTHOR_BY_ID_QUERY,
     AUTHORS_QUERY,
     CREATE_AUTHOR_MUTATION,
     DEL_AUTHOR_MUTATION,
-    EDIT_AUTHOR_MUTATION } from './author.api.test.gql';
+    EDIT_AUTHOR_MUTATION
+} from './author.api.test.gql';
 import { authorService } from '../../src/services/author.service';
+import { afterAll, beforeAll, describe, expect, test } from '@jest/globals';
 
 describe('Test author api', () => {
     beforeAll(async () => {
         initDatabase();
+    });
+
+    afterAll(async done => {
+        // Closing the DB connection allows Jest to exit successfully.
+        await closeDatabase();
+        done();
     });
 
     test('Test createAuthor mutation success', async () => {

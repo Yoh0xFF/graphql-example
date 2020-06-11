@@ -89,7 +89,7 @@ class BookService extends BaseService {
     async findBooksWithAuthors(bookIds) {
         return Book.query()
             .whereIn('id', bookIds)
-            .eager('authors');
+            .withGraphFetched('authors');
     }
 
 }

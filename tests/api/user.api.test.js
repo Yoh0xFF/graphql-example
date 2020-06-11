@@ -1,11 +1,18 @@
 import { initApolloTestClient } from '../utils/apollo-test-client';
 import { userService } from '../../src/services/user.service';
 import { DEL_USER_MUTATION, EDIT_USER_MUTATION, USER_BY_ID_QUERY, USERS_QUERY } from './user.api.test.gql';
-import { initDatabase } from '../../src/utils/database';
+import { closeDatabase, initDatabase } from '../../src/utils/database';
+import { afterAll, beforeAll, describe, expect, test } from '@jest/globals';
 
 describe('Test user api', () => {
     beforeAll(async () => {
         initDatabase();
+    });
+
+    afterAll(async done => {
+        // Closing the DB connection allows Jest to exit successfully.
+        await closeDatabase();
+        done();
     });
 
     test('Test editUser mutation fail, email exists', async () => {

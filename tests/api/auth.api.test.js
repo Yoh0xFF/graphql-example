@@ -1,15 +1,24 @@
 import { initApolloTestClient } from '../utils/apollo-test-client';
-import { initDatabase } from '../../src/utils/database';
+import { initDatabase, closeDatabase } from '../../src/utils/database';
 import { userService } from '../../src/services/user.service';
-import { AUTH_USER_QUERY,
+import {
+    AUTH_USER_QUERY,
     CHANGE_PASSWORD_MUTATION,
     LOGIN_MUTATION,
     SIGNUP_MUTATION,
-    UPDATE_PERSONAL_INFO_MUTATION } from './auth.api.test.gql';
+    UPDATE_PERSONAL_INFO_MUTATION
+} from './auth.api.test.gql';
+import { afterAll, beforeAll, describe, expect, test } from '@jest/globals';
 
 describe('Test auth api', () => {
     beforeAll(async () => {
         initDatabase();
+    });
+
+    afterAll(async done => {
+        // Closing the DB connection allows Jest to exit successfully.
+        await closeDatabase();
+        done();
     });
 
     test('Test authUser query not authorized', async () => {

@@ -1,4 +1,4 @@
-import { initDatabase } from '../../src/utils/database';
+import { closeDatabase, initDatabase } from '../../src/utils/database';
 import { userService } from '../../src/services/user.service';
 import { initApolloTestClient } from '../utils/apollo-test-client';
 import { authorService } from '../../src/services/author.service';
@@ -10,6 +10,7 @@ import {
     DEL_BOOK_MUTATION,
     EDIT_BOOK_MUTATION
 } from './book.api.test.gql';
+import { afterAll, beforeAll, describe, expect, test } from '@jest/globals';
 
 describe('Test book api', () => {
     const authors = [];
@@ -35,6 +36,12 @@ describe('Test book api', () => {
         authorIds.push(author1.id);
         authorIds.push(author2.id);
         authorIds.push(author3.id);
+    });
+
+    afterAll(async done => {
+        // Closing the DB connection allows Jest to exit successfully.
+        await closeDatabase();
+        done();
     });
 
     test('Test createBook mutation success', async () => {
