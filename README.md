@@ -2,7 +2,7 @@
 
 Sample project demonstrating common issues to consider when working on GraphQL API
 
-Please see the article [here](https://www.youtube.com/user/ptuxermann/featured)
+Please see the article [here](https://www.toptal.com/graphql/creating-your-first-graphql-api)
 
 # Used Core Libraries
 
