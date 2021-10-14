@@ -2,10 +2,10 @@ import { allow } from 'graphql-shield';
 
 export const permissions = {
 
-    Mutation: {
+  Mutation: {
 
-        login: allow,
+    login: allow,
 
-        signup: allow
-    }
+    signup: allow
+  }
 };

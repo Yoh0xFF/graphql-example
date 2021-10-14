@@ -1,34 +1,34 @@
 extend type Query {
 
-    authUser: User
+  authUser: User
 }
 
 extend type Mutation {
 
-    login(email: String!, password: String!): LoginStatus!
+  login(email: String!, password: String!): LoginStatus!
 
-    signup(signupReq: SignupReq!): SingupStatus!
+  signup(signupReq: SignupReq!): SingupStatus!
 
-    updatePersonalInfo(fullName: String!): User
+  updatePersonalInfo(fullName: String!): User
 
-    changePassword(password: String!, newPassword: String!, reNewPassword: String!): Boolean!
+  changePassword(password: String!, newPassword: String!, reNewPassword: String!): Boolean!
 }
 
 input SignupReq {
-    fullName: String!
-    email: String!
-    password: String!
-    rePassword: String!
+  fullName: String!
+  email: String!
+  password: String!
+  rePassword: String!
 }
 
 type LoginStatus {
-    success: Boolean!
-    message: String!
-    token: String
+  success: Boolean!
+  message: String!
+  token: String
 }
 
 type SingupStatus {
-    success: Boolean!
-    message: String!
-    user: User
+  success: Boolean!
+  message: String!
+  user: User
 }

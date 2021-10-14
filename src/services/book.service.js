@@ -4,93 +4,93 @@ import { transaction } from 'objection';
 
 class BookService extends BaseService {
 
-    constructor() {
-        super(Book);
+  constructor() {
+    super(Book);
+  }
+
+  async createBook(creatorId, editBookReq) {
+    const { authorIds } = editBookReq;
+
+    editBookReq.creatorId = creatorId;
+    delete editBookReq.authorIds;
+
+    let trx;
+    try {
+      trx = await transaction.start(Book.knex());
+
+      const book = await Book.query(trx).insert(editBookReq);
+
+      for (const authorId of authorIds) {
+        await book.$relatedQuery('authors', trx).relate(authorId);
+      }
+
+      await trx.commit();
+
+      return book;
+    } catch (err) {
+      await trx.rollback();
+      throw err;
     }
+  }
 
-    async createBook(creatorId, editBookReq) {
-        const { authorIds } = editBookReq;
+  async editBook(id, editBookReq) {
+    const { authorIds } = editBookReq;
+    delete editBookReq.authorIds;
 
-        editBookReq.creatorId = creatorId;
-        delete editBookReq.authorIds;
+    let trx;
+    try {
+      trx = await transaction.start(Book.knex());
 
-        let trx;
-        try {
-            trx = await transaction.start(Book.knex());
+      await Book.query(trx).findById(id).patch(editBookReq);
+      const book = await Book.query(trx).findById(id);
 
-            const book = await Book.query(trx).insert(editBookReq);
-
-            for (const authorId of authorIds) {
-                await book.$relatedQuery('authors', trx).relate(authorId);
-            }
-
-            await trx.commit();
-
-            return book;
-        } catch (err) {
-            await trx.rollback();
-            throw err;
+      if (book) {
+        await book.$relatedQuery('authors', trx).unrelate();
+        for (const authorId of authorIds) {
+          await book.$relatedQuery('authors', trx).relate(authorId);
         }
+      }
+
+      await trx.commit();
+
+      return book;
+    } catch (err) {
+      await trx.rollback();
+      throw err;
     }
+  }
 
-    async editBook(id, editBookReq) {
-        const { authorIds } = editBookReq;
-        delete editBookReq.authorIds;
+  async deleteBook(id) {
+    let trx;
+    try {
+      trx = await transaction.start(Book.knex());
 
-        let trx;
-        try {
-            trx = await transaction.start(Book.knex());
+      const book = await Book.query(trx).findById(id);
 
-            await Book.query(trx).findById(id).patch(editBookReq);
-            const book = await Book.query(trx).findById(id);
+      if (book) {
+        await book.$relatedQuery('authors', trx).unrelate();
 
-            if (book) {
-                await book.$relatedQuery('authors', trx).unrelate();
-                for (const authorId of authorIds) {
-                    await book.$relatedQuery('authors', trx).relate(authorId);
-                }
-            }
+        await Book.query(trx).deleteById(id);
+      }
 
-            await trx.commit();
+      await trx.commit();
 
-            return book;
-        } catch (err) {
-            await trx.rollback();
-            throw err;
-        }
+      return book;
+    } catch (err) {
+      await trx.rollback();
+      throw err;
     }
+  }
 
-    async deleteBook(id) {
-        let trx;
-        try {
-            trx = await transaction.start(Book.knex());
+  async findByAuthor(authorId) {
+    return Book.query().where('authorId', authorId);
+  }
 
-            const book = await Book.query(trx).findById(id);
-
-            if (book) {
-                await book.$relatedQuery('authors', trx).unrelate();
-
-                await Book.query(trx).deleteById(id);
-            }
-
-            await trx.commit();
-
-            return book;
-        } catch (err) {
-            await trx.rollback();
-            throw err;
-        }
-    }
-
-    async findByAuthor(authorId) {
-        return Book.query().where('authorId', authorId);
-    }
-
-    async findBooksWithAuthors(bookIds) {
-        return Book.query()
-            .whereIn('id', bookIds)
-            .withGraphFetched('authors');
-    }
+  async findBooksWithAuthors(bookIds) {
+    return Book.query()
+      .whereIn('id', bookIds)
+      .withGraphFetched('authors');
+  }
 
 }
 

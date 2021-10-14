@@ -3,15 +3,15 @@ import { isAuthorized } from '../utils/shield';
 
 export const permissions = {
 
-    Query: {
+  Query: {
 
-        '*': isAuthorized,
-        sayHello: allow
-    },
+    '*': isAuthorized,
+    sayHello: allow
+  },
 
-    Mutation: {
+  Mutation: {
 
-        '*': isAuthorized,
-        sayHello: allow
-    }
+    '*': isAuthorized,
+    sayHello: allow
+  }
 };

@@ -2,10 +2,10 @@ import { allow } from 'graphql-shield';
 
 export const permissions = {
 
-    Query: {
+  Query: {
 
-        authorById: allow,
+    authorById: allow,
 
-        authors: allow
-    }
+    authors: allow
+  }
 };

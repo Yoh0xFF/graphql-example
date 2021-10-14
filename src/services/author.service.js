@@ -3,40 +3,40 @@ import BaseService from './base.service';
 
 class AuthorService extends BaseService {
 
-    constructor() {
-        super(Author);
-    }
+  constructor() {
+    super(Author);
+  }
 
-    async createAuthor(creatorId, editAuthorReq) {
-        editAuthorReq.creatorId = creatorId;
+  async createAuthor(creatorId, editAuthorReq) {
+    editAuthorReq.creatorId = creatorId;
 
-        const author = await Author.query().insert(editAuthorReq);
+    const author = await Author.query().insert(editAuthorReq);
 
-        return author;
-    }
+    return author;
+  }
 
-    async editAuthor(id, editAuthorReq) {
-        await Author.query().findById(id).patch(editAuthorReq);
+  async editAuthor(id, editAuthorReq) {
+    await Author.query().findById(id).patch(editAuthorReq);
 
-        return this.findById(id);
-    }
+    return this.findById(id);
+  }
 
-    async deleteAuthor(id) {
-        const author = await this.findById(id);
+  async deleteAuthor(id) {
+    const author = await this.findById(id);
 
-        await Author.query().deleteById(id);
+    await Author.query().deleteById(id);
 
-        return author;
-    }
+    return author;
+  }
 
-    async findAuthorsWithRecentBooks(authorIds) {
-        return Author.query()
-            .whereIn('id', authorIds)
-            .eager('books')
-            .modifyEager('books', builder => {
-                builder.orderBy('createdAt', 'desc').limit(10);
-            });
-    }
+  async findAuthorsWithRecentBooks(authorIds) {
+    return Author.query()
+      .whereIn('id', authorIds)
+      .eager('books')
+      .modifyEager('books', builder => {
+        builder.orderBy('createdAt', 'desc').limit(10);
+      });
+  }
 
 }
 

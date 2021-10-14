@@ -1,47 +1,47 @@
 extend type Query {
 
-    bookById(id: ID!): Book
+  bookById(id: ID!): Book
 
-    booksByAuthor(authorId: Int): [Book!]!
+  booksByAuthor(authorId: Int): [Book!]!
 
-    books(first: Int, offset: Int): [Book!]!
+  books(first: Int, offset: Int): [Book!]!
 }
 
 extend type Mutation {
 
-    createBook(editBookReq: EditBookReq!): Book!
+  createBook(editBookReq: EditBookReq!): Book!
 
-    editBook(id: ID!, editBookReq: EditBookReq!): Book
+  editBook(id: ID!, editBookReq: EditBookReq!): Book
 
-    deleteBook(id: ID!): Book
+  deleteBook(id: ID!): Book
 }
 
 type Book {
-    id: ID!
-    creator: User!
-    createdAt: DateTime!
-    updatedAt: DateTime!
-    authors: [Author!]!
-    title: String!
-    about: String
-    language: String
-    genre: String
-    isbn13: String
-    isbn10: String
-    publisher: String
-    publishDate: Date
-    hardcover: Int
+  id: ID!
+  creator: User!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  authors: [Author!]!
+  title: String!
+  about: String
+  language: String
+  genre: String
+  isbn13: String
+  isbn10: String
+  publisher: String
+  publishDate: Date
+  hardcover: Int
 }
 
 input EditBookReq {
-    authorIds: [ID!]!
-    title: String!
-    about: String
-    language: String
-    genre: String
-    isbn13: String
-    isbn10: String
-    publisher: String
-    publishDate: Date
-    hardcover: Int
+  authorIds: [ID!]!
+  title: String!
+  about: String
+  language: String
+  genre: String
+  isbn13: String
+  isbn10: String
+  publisher: String
+  publishDate: Date
+  hardcover: Int
 }

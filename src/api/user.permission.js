@@ -2,17 +2,17 @@ import { isUserManager } from '../utils/shield';
 
 export const permissions = {
 
-    Query: {
+  Query: {
 
-        userById: isUserManager,
+    userById: isUserManager,
 
-        users: isUserManager
-    },
+    users: isUserManager
+  },
 
-    Mutation: {
+  Mutation: {
 
-        editUser: isUserManager,
+    editUser: isUserManager,
 
-        deleteUser: isUserManager
-    }
+    deleteUser: isUserManager
+  }
 };

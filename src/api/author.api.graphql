@@ -1,34 +1,34 @@
 extend type Query {
 
-    authorById(id: ID!): Author
+  authorById(id: ID!): Author
 
-    authors(first: Int, offset: Int): [Author!]!
+  authors(first: Int, offset: Int): [Author!]!
 }
 
 extend type Mutation {
 
-    createAuthor(editAuthorReq: EditAuthorReq!): Author!
+  createAuthor(editAuthorReq: EditAuthorReq!): Author!
 
-    editAuthor(id: ID!, editAuthorReq: EditAuthorReq!): Author
+  editAuthor(id: ID!, editAuthorReq: EditAuthorReq!): Author
 
-    deleteAuthor(id: ID!): Author
+  deleteAuthor(id: ID!): Author
 }
 
 type Author {
-    id: ID!
-    creator: User!
-    createdAt: DateTime!
-    updatedAt: DateTime!
-    fullName: String!
-    about: String
-    nationality: String
-    genre: String
-    books: [Book!]!
+  id: ID!
+  creator: User!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  fullName: String!
+  about: String
+  nationality: String
+  genre: String
+  books: [Book!]!
 }
 
 input EditAuthorReq {
-    fullName: String!
-    about: String
-    nationality: String
-    genre: String
+  fullName: String!
+  about: String
+  nationality: String
+  genre: String
 }

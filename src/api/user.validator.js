@@ -3,16 +3,16 @@ import { isEmail } from 'validator';
 
 export const validators = {
 
-    Mutation: {
+  Mutation: {
 
-        editUser: (resolve, obj, args, context) => {
-            const { email } = args.editUserReq;
+    editUser: (resolve, obj, args, context) => {
+      const { email } = args.editUserReq;
 
-            if (!isEmail(email)) {
-                throw new UserInputError('Invalid Email address!');
-            }
+      if (!isEmail(email)) {
+        throw new UserInputError('Invalid Email address!');
+      }
 
-            return resolve(obj, args, context);
-        }
+      return resolve(obj, args, context);
     }
+  }
 };
