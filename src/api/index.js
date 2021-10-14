@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { ForbiddenError } from 'apollo-server-express';
-import { makeExecutableSchema } from 'graphql-tools';
+import { makeExecutableSchema } from '@graphql-tools/schema';
 import { applyMiddleware } from 'graphql-middleware';
 import { shield } from 'graphql-shield';
 

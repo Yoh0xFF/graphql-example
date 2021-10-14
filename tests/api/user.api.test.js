@@ -9,10 +9,9 @@ describe('Test user api', () => {
         initDatabase();
     });
 
-    afterAll(async done => {
+    afterAll(done => {
         // Closing the DB connection allows Jest to exit successfully.
-        await closeDatabase();
-        done();
+        closeDatabase().finally(done);
     });
 
     test('Test editUser mutation fail, email exists', async () => {

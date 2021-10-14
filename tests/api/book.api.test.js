@@ -38,10 +38,9 @@ describe('Test book api', () => {
         authorIds.push(author3.id);
     });
 
-    afterAll(async done => {
+    afterAll(done => {
         // Closing the DB connection allows Jest to exit successfully.
-        await closeDatabase();
-        done();
+        closeDatabase().finally(done);
     });
 
     test('Test createBook mutation success', async () => {

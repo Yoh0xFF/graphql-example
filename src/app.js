@@ -49,11 +49,13 @@ apiExplorer.getSchema()
             debug: true
         });
 
-        apolloServer.applyMiddleware({ app });
+        apolloServer.start().then(() => {
+            apolloServer.applyMiddleware({ app });
 
-        // Run server
-        app.listen({ port }, () => {
-            logger.info(`🚀Server ready at http://localhost:${ port }${ apolloServer.graphqlPath }`);
+            // Run server
+            app.listen({ port }, () => {
+                logger.info(`🚀Server ready at http://localhost:${ port }${ apolloServer.graphqlPath }`);
+            });
         });
     })
     .catch(err => {
