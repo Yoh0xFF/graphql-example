@@ -35,7 +35,7 @@
     "objection": "2.2.16",
     "password-validator": "5.1.1",
     "sqlite3": "^5.0.2",
-    "validator": "13.6.0",
+    "validator": "13.7.0",
     "winston": "3.3.3"
   },
   "devDependencies": {
