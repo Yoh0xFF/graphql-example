@@ -2,35 +2,39 @@ module.exports = {
   env: {
     es6: true,
     node: true,
-    jest: true
+    jest: true,
   },
-  extends: [
-    'standard'
-  ],
+  extends: ["standard"],
   globals: {
-    Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly'
+    Atomics: "readonly",
+    SharedArrayBuffer: "readonly",
   },
   parserOptions: {
     ecmaVersion: 2018,
-    sourceType: 'module'
+    sourceType: "module",
   },
-  parser: 'babel-eslint',
+  parser: "@babel/eslint-parser",
   rules: {
-    semi: ['error', 'always'],
-    quotes: ['error', 'single'],
-    indent: ['error', 2],
-    'object-curly-spacing': ['error', 'always'],
-    'template-curly-spacing': ['error', 'always'],
-    'space-before-function-paren': ['error', {
-      anonymous: 'never',
-      named: 'never',
-      asyncArrow: 'always'
-    }],
-    'padded-blocks': ['error', {
-      blocks: 'never',
-      classes: 'always',
-      switches: 'never'
-    }]
-  }
+    semi: ["error", "always"],
+    quotes: ["error", "single"],
+    indent: ["error", 2],
+    "object-curly-spacing": ["error", "always"],
+    "template-curly-spacing": ["error", "always"],
+    "space-before-function-paren": [
+      "error",
+      {
+        anonymous: "never",
+        named: "never",
+        asyncArrow: "always",
+      },
+    ],
+    "padded-blocks": [
+      "error",
+      {
+        blocks: "never",
+        classes: "always",
+        switches: "never",
+      },
+    ],
+  },
 };

@@ -1,25 +1,22 @@
-import { readFileSync } from 'fs';
-import { GraphQLDate, GraphQLDateTime, GraphQLTime } from 'graphql-iso-date';
+import { readFileSync } from "fs";
+import { GraphQLDate, GraphQLDateTime, GraphQLTime } from "graphql-scalars";
 
-export const typeDefs = readFileSync(`${ __dirname }/root.api.graphql`, 'utf8');
+export const typeDefs = readFileSync(`${__dirname}/root.api.graphql`, "utf8");
 
 export const resolvers = {
-
   Date: GraphQLDate,
   Time: GraphQLTime,
   DateTime: GraphQLDateTime,
 
   Query: {
-
     sayHello: (obj, args, context, info) => {
-      return `Hello ${ args.name }!`;
-    }
+      return `Hello ${args.name}!`;
+    },
   },
 
   Mutation: {
-
     sayHello: (obj, args, context, info) => {
-      return `Hello ${ args.name }!`;
-    }
-  }
+      return `Hello ${args.name}!`;
+    },
+  },
 };
